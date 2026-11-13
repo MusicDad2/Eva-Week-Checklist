@@ -1,0 +1,528 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <meta name="color-scheme" content="light dark" />
+    <link rel="icon" href="data:," />
+    <title>Eva's Week Checklist — Shared</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@600;700;800&family=Nunito:wght@600;700;800;900&display=swap" rel="stylesheet" />
+    <style>
+      button, [role="button"], select, summary, a { min-height: 2rem; }
+      * { box-sizing: border-box; }
+      :root {
+        --bg: #FFF9F0;
+        --surface: #FFFFFF;
+        --ink: #1E1B2E;
+        --dim: #5C5670;
+        --line: #EDE3D3;
+        --extras-bg: #F5F0FF;
+        --start-bg: #FFF3D6;
+        --start-line: #E9A800;
+        color-scheme: light dark;
+      }
+      @media (prefers-color-scheme: dark) {
+        :root {
+          --bg: #17141F;
+          --surface: #242031;
+          --ink: #F6F1E7;
+          --dim: #B9B2CC;
+          --line: #3A3450;
+          --extras-bg: #2A2140;
+          --start-bg: #3A2E12;
+          --start-line: #E9A800;
+        }
+      }
+      html, body { margin: 0; padding: 0; }
+      body {
+        background: var(--bg);
+        color: var(--ink);
+        font-family: "Nunito", system-ui, sans-serif;
+        -webkit-font-smoothing: antialiased;
+      }
+      .font-display { font-family: "Baloo 2", "Nunito", system-ui, sans-serif; }
+      main { max-width: 42rem; margin: 0 auto; padding: 1.25rem 1rem 2.5rem; }
+      button { font-family: inherit; cursor: pointer; }
+      a { color: #1D4ED8; }
+      @media (prefers-color-scheme: dark) { a { color: #7FB3FF; } }
+
+      .stars-pill {
+        background: #FFD93D; color: #1E1B2E;
+        border-radius: 999px; padding: .5rem .9rem;
+        font-family: "Baloo 2", sans-serif; font-weight: 800; font-size: 15px;
+        white-space: nowrap;
+      }
+      .panel {
+        background: var(--surface);
+        border: 3px solid #FFE29A;
+        border-radius: 24px; padding: 1rem;
+      }
+      @media (prefers-color-scheme: dark) { .panel { border-color: #4A3F14; } }
+      .panel-plain { border: 2px solid var(--line); }
+      .bar-track { height: 20px; border-radius: 999px; background: #FFF1C9; overflow: hidden; margin-top: .75rem; }
+      @media (prefers-color-scheme: dark) { .bar-track { background: #3A3450; } }
+      .bar-fill { height: 100%; border-radius: 999px; background: linear-gradient(90deg,#FF6B6B,#FFC93C,#00B8A9,#4CC9F0,#7C5CFF); transition: width .5s ease; }
+
+      .badge { border-radius: 999px; padding: .15rem .55rem; font-size: 11px; font-weight: 900; color: #fff; letter-spacing: .02em; }
+      .badge-major { background: #B91C1C; }
+      .badge-minor { background: #EA580C; }
+      .badge-formative { background: #2563EB; }
+      .tag-chip { border-radius: 999px; padding: .15rem .55rem; font-size: 11px; font-weight: 900; color: #fff; }
+      .start-chip { border-radius: 999px; padding: .15rem .55rem; font-size: 11px; font-weight: 900; background: #FFF3D6; color: #6B4E00; border: 2px solid #E9A800; }
+
+      .startfirst { background: var(--start-bg); border: 3px dashed var(--start-line); border-radius: 24px; padding: 1rem; }
+      .startfirst button {
+        display: flex; align-items: center; gap: .75rem; width: 100%; text-align: left;
+        background: var(--surface); border-radius: 16px; padding: .5rem .75rem; min-height: 44px;
+      }
+      .numdot { display: grid; place-items: center; min-width: 30px; min-height: 30px; border-radius: 999px; color: #fff; font-family: "Baloo 2", sans-serif; font-weight: 800; font-size: 16px; flex-shrink: 0; }
+
+      .daynav { display: flex; flex-wrap: wrap; gap: .5rem; margin-top: 1.25rem; }
+      .daynav button {
+        border-radius: 999px; padding: .5rem 1rem; min-height: 44px;
+        font-family: "Baloo 2", sans-serif; font-weight: 800; font-size: 16px;
+        background: var(--surface); color: var(--ink); border: 2px solid var(--line);
+      }
+      .daynav button.active { background: #1E1B2E; color: #fff; border-color: #1E1B2E; }
+      @media (prefers-color-scheme: dark) { .daynav button.active { background: #F6F1E7; color: #1E1B2E; border-color: #F6F1E7; } }
+
+      .card {
+        display: flex; align-items: center; gap: .75rem;
+        border-radius: 24px; padding: 1rem; border: 3px solid;
+      }
+      .card.done { background: #F3F4F6 !important; border-color: #D1D5DB !important; opacity: .78; }
+      @media (prefers-color-scheme: dark) { .card.done { background: #2A2735 !important; border-color: #454052 !important; } }
+      .card .emoji { font-size: 40px; line-height: 1; flex-shrink: 0; }
+      .card h3 { margin: 0; font-family: "Baloo 2", sans-serif; font-weight: 800; line-height: 1.15; font-size: 21px; color: #1E1B2E; }
+      .card.done h3 { text-decoration: line-through; }
+      .card .detail { margin: .15rem 0 0; font-size: 15px; font-weight: 700; line-height: 1.35; }
+      .card .step { margin: .25rem 0 0; font-size: 14px; font-weight: 800; line-height: 1.35; color: #1E1B2E; }
+      .card .subject { margin: .25rem 0 0; font-size: 12px; font-weight: 900; text-transform: uppercase; letter-spacing: .05em; color: #5C5670; }
+      .card .badges { display: flex; flex-wrap: wrap; align-items: center; gap: .4rem; }
+      .checkbtn {
+        flex-shrink: 0; display: grid; place-items: center;
+        min-width: 56px; min-height: 56px; border-radius: 999px;
+        font-weight: 900; font-size: 26px; background: #fff;
+      }
+      .checkbtn.done { background: #22C55E !important; color: #fff !important; border-color: #22C55E !important; }
+      .checkbtn.saving { opacity: .55; }
+
+      .linkpills { display: flex; flex-wrap: wrap; gap: .4rem; margin-top: .35rem; }
+      .linkpills a {
+        display: inline-flex; align-items: center; min-height: 36px;
+        background: #fff; border: 2px solid #1E1B2E; color: #1D4ED8;
+        border-radius: 999px; padding: .3rem .8rem; font-size: 13px; font-weight: 800;
+        text-decoration: underline; text-decoration-thickness: 2px; text-underline-offset: 2px;
+      }
+      .tap-label { margin: .5rem 0 0; font-size: 12px; font-weight: 900; text-transform: uppercase; letter-spacing: .05em; color: #5C5670; }
+
+      .extras { background: var(--extras-bg); border: 3px dashed #B79CFF; border-radius: 24px; padding: 1rem; margin-top: 1.5rem; }
+      .extras .card h3, .extras .card .step { color: #1E1B2E; }
+
+      .biglink {
+        display: flex; align-items: center; justify-content: center; gap: .5rem;
+        margin-top: 1.25rem; border-radius: 999px; padding: .75rem 1rem; min-height: 48px;
+        background: var(--surface); border: 2px solid var(--ink);
+        font-family: "Baloo 2", sans-serif; font-weight: 800; font-size: 16px;
+        text-decoration: underline; text-decoration-thickness: 2px; text-underline-offset: 2px;
+      }
+      .syncbar {
+        display: flex; flex-wrap: wrap; align-items: center; gap: .5rem;
+        margin-top: 1rem; font-size: 13px; font-weight: 800; color: var(--dim);
+      }
+      .syncbar button {
+        border-radius: 999px; border: 2px solid var(--line); background: var(--surface); color: var(--ink);
+        padding: .35rem .9rem; min-height: 36px; font-weight: 800; font-size: 13px;
+      }
+      #toast {
+        display: none; margin-top: 1rem; border-radius: 16px; padding: .75rem 1rem;
+        background: #FDE8E8; color: #7A1E1E; border: 2px solid #FF6B6B; font-weight: 800; font-size: 14px;
+      }
+      details.grownups { margin-top: 1.5rem; background: var(--surface); border: 2px solid var(--line); border-radius: 24px; padding: 1rem; }
+      details.grownups summary { font-family: "Baloo 2", sans-serif; font-weight: 700; cursor: pointer; min-height: 36px; }
+      details.grownups ul { margin: .5rem 0 0; padding-left: 1.1rem; font-size: 14px; font-weight: 600; line-height: 1.6; color: var(--dim); }
+      .stack { display: flex; flex-direction: column; gap: .75rem; margin-top: .75rem; }
+      .empty-note { margin-top: .75rem; text-align: center; font-family: "Baloo 2", sans-serif; font-size: 20px; font-weight: 700; background: var(--surface); border: 2px dashed #C9B99A; border-radius: 24px; padding: 1.25rem; }
+      @media (prefers-reduced-motion: reduce) { .bar-fill { transition: none; } }
+    </style>
+  </head>
+  <body>
+    <main>
+      <div style="display:flex;align-items:flex-start;justify-content:space-between;gap:.75rem;">
+        <div>
+          <h1 class="font-display" style="margin:0;font-size:34px;line-height:1;font-weight:800;">Hi Eva! 👋</h1>
+          <p style="margin:.5rem 0 0;font-size:17px;font-weight:700;color:var(--dim);">Homework week: Nov 12 – 19</p>
+        </div>
+        <div class="stars-pill" id="stars" aria-label="Stars earned">⭐ 0 stars</div>
+      </div>
+
+      <div class="syncbar" aria-live="polite">
+        <span id="sync-status">☁️ Connecting to your shared checklist…</span>
+        <button id="refresh-btn" type="button" aria-label="Refresh from the shared sheet">↻ Refresh</button>
+        <a id="sheet-link" href="https://docs.google.com/spreadsheets/d/1tALFxqBEKovevcPTp6atxbq5tSCjc2jMX0Wkt3bwwx4/edit?usp=sharing" target="_blank" rel="noreferrer" style="font-weight:800;">Open the Sheet</a>
+      </div>
+      <div id="toast" role="alert"></div>
+
+      <section aria-label="Homework progress" class="panel" style="margin-top:1rem;">
+        <div style="display:flex;justify-content:space-between;gap:.5rem;font-family:'Baloo 2',sans-serif;font-weight:700;font-size:16px;">
+          <span id="progress-label">Loading…</span>
+          <span id="progress-pct"></span>
+        </div>
+        <div class="bar-track" role="progressbar" aria-label="Homework progress" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" id="progress-bar">
+          <div class="bar-fill" id="progress-fill" style="width:0%"></div>
+        </div>
+        <p style="margin:.5rem 0 0;font-size:14px;font-weight:700;color:var(--dim);">Tap a big circle to check it off — it saves to the shared Sheet, so it shows up on every device. That's it!</p>
+      </section>
+
+      <section aria-label="What order to do homework in" class="panel panel-plain" style="margin-top:1rem;">
+        <h2 class="font-display" style="margin:0;font-size:17px;font-weight:800;">Do homework in this order:</h2>
+        <ol style="margin:.5rem 0 0;padding:0;list-style:none;display:flex;flex-direction:column;gap:.4rem;font-size:15px;font-weight:800;">
+          <li><span class="badge badge-major">🏆 MAJOR SUMMATIVE</span> <span style="color:var(--dim);">— biggest grade, do first!</span></li>
+          <li><span class="badge badge-minor">⭐ MINOR SUMMATIVE</span> <span style="color:var(--dim);">— next</span></li>
+          <li><span class="badge badge-formative">✏️ FORMATIVE</span> <span style="color:var(--dim);">— practice that counts</span></li>
+          <li style="font-size:14px;color:var(--dim);">Then everything else — like cello practice 🎵</li>
+        </ol>
+      </section>
+
+      <section aria-label="Biggest homework first" class="startfirst" id="start-first" style="margin-top:1rem;display:none;">
+        <h2 class="font-display" style="margin:0;font-size:19px;font-weight:800;">🚀 Biggest first!</h2>
+        <p style="margin:.25rem 0 0;font-size:13px;font-weight:700;color:var(--dim);">Major tests beat minor quizzes. Start a few days early — no last-night rush.</p>
+        <div class="stack" id="start-first-list"></div>
+      </section>
+
+      <nav aria-label="Pick a day" class="daynav" id="day-nav"></nav>
+
+      <section aria-label="Homework for this day" style="margin-top:1rem;">
+        <h2 class="font-display" style="margin:0;font-size:22px;font-weight:800;">📚 Homework</h2>
+        <div id="homework-list"></div>
+      </section>
+
+      <section aria-label="Fun and extra stuff for this day" class="extras" id="extras-wrap" style="display:none;">
+        <h2 class="font-display" style="margin:0;font-size:20px;font-weight:800;">🎉 Fun &amp; extra stuff</h2>
+        <p style="margin:.25rem 0 0;font-size:13px;font-weight:700;color:var(--dim);">Not homework — parties, dance, and your-choice things live here.</p>
+        <div class="stack" id="extras-list"></div>
+      </section>
+
+      <a class="biglink" href="https://docs.google.com/document/d/1FPAY84ps8RnFcd49tzOMScBchxpK3-BiYChy2IxI4xM/edit?usp=sharing" target="_blank" rel="noreferrer" aria-label="Open The Wonder Grade 6 full list in a new tab">📄 Open The Wonder — Grade 6 (the whole list)</a>
+
+      <details class="grownups">
+        <summary aria-label="Show notes for grown-ups">For grown-ups 👨‍👩‍👧</summary>
+        <ul>
+          <li>This page reads and writes the shared Google Sheet “Eva's Week Checklist — Nov 12-19” through the Eva Checklist Bridge. A tick here updates the Sheet, and a tick in the Sheet shows up here on Refresh — so Eva's Chromebook and a parent's phone stay in sync.</li>
+          <li>Homework order: Major Summative → Minor Summative / Summative → Formative → everything else. Fun &amp; extras are in their own section, and the progress bar counts homework only.</li>
+          <li>First steps live on the day to do them, not the due day — quiz prep Thu, math practice Fri, big-test studying Sun, Nutcracker prep Sat, bouquet reminder Tue. Due-day cards keep a small “Start …” chip pointing back.</li>
+          <li>Eva plays cello — Low Strings with Yoo: shifting skills, D &amp; A strings.</li>
+          <li>Study links on the cards come straight from The Wonder (Grade 6): Astronomy study guide, review games, Knowt flashcards, History Unit 5 newsletter &amp; website, Math unit agenda.</li>
+          <li>Nutcracker tickets: $15 pre-sale ($20 day-of) • Spirit wear orders end Mon Nov 16 • Bouquets due Thu Nov 19.</li>
+          <li>Teachers — A Day: Laabs, Dimasi, Yoo • B Day: Redcay, Greene, McCallum • Getz every day.</li>
+          <li>To add a task, add a row in the Sheet — it will appear here on the next refresh.</li>
+        </ul>
+      </details>
+
+      <noscript><p style="font-weight:800;margin-top:1rem;">This checklist needs JavaScript to load from the shared Sheet. You can open the Sheet directly with the “Open the Sheet” link above.</p></noscript>
+    </main>
+
+    <script>
+      // Bridge for the shared Google Sheet "Eva's Week Checklist — Nov 12-19".
+      // GET returns {tasks:[...]}; POST {row, done} writes the Done checkbox.
+      var BRIDGE_URL = "https://script.google.com/macros/s/AKfycbwm4HP2uFOdjXXMoudweFwl9go23n8eDWyWzqxdtsvbmtUkHHrly9U_kxmiYSGwvjiEQw/exec";
+
+      // Saved copy of the Sheet as read on Thu Nov 12, 2026 — only used if the
+      // bridge can't be reached, so the page never opens blank.
+      var FALLBACK_TASKS = [{"row":2,"done":false,"date":"2026-11-12T00:00:00.000Z","day":"Thu 12","section":"Homework","priority":"Summative","subject":"Math • Dimasi","title":"Math Test Day","step":"","detail":"Summative + integers quiz","links":"Math Unit Agenda: https://docs.google.com/document/d/125BgiK52EV0vsolGjTtZiBI8fWbvexe3uAmgBjSH4P4/edit?usp=sharing"},{"row":3,"done":false,"date":"2026-11-12T00:00:00.000Z","day":"Thu 12","section":"Homework","priority":"Minor Summative","subject":"Science • Redcay","title":"Start Astronomy Quiz #3","step":"Do the Schoology practice first — it's graded","detail":"Quiz is Fri — start tonight!","links":"Astronomy Study Guide: https://docs.google.com/presentation/d/1JcQ3FZYs3oZ_iFq4CABI2lYwrRxGg-d1v_JyVJqyyII/edit?usp=sharing | Review Games: https://docs.google.com/spreadsheets/d/1dO5Kc2_v_LB_kM6_XQTYJWL7TBNnrAmyD3xCnZHAcpU/edit?gid=1349913730 | Flashcards Astronomers: https://knowt.com/flashcards/6c04e512-b008-44bd-952d-47331ddf2088 | Flashcards Sun: https://knowt.com/flashcards/0dfe009e-2001-4f5d-9606-80847a91e857 | Flashcards Planets: https://knowt.com/flashcards/e1b6b08c-f945-491d-875f-f61ddac1e062"},{"row":4,"done":false,"date":"2026-11-12T00:00:00.000Z","day":"Thu 12","section":"Homework","priority":"Formative","subject":"English • Getz","title":"Book Club Meeting","step":"","detail":"Bring sticky notes + plot diagram","links":""},{"row":5,"done":false,"date":"2026-11-12T00:00:00.000Z","day":"Thu 12","section":"Homework","priority":"","subject":"History • Laabs","title":"History IRW Due","step":"","detail":"Unit 5 — hand it in!","links":"Unit 5 Newsletter: https://app.smore.com/n/j7z6g | History Class Website: https://sites.google.com/lcps.org/wms6thgradeushistory/home"},{"row":6,"done":false,"date":"2026-11-12T00:00:00.000Z","day":"Thu 12","section":"Homework","priority":"","subject":"Cello • Yoo — Low Strings","title":"Cello Practice","step":"Just 10 minutes on your cello — slow and steady","detail":"Shifting skills • D & A strings","links":""},{"row":7,"done":false,"date":"2026-11-12T00:00:00.000Z","day":"Thu 12","section":"Fun & extra","priority":"","subject":"PE • Greene","title":"Sneakers by the Door","step":"Put your sneakers by the door tonight","detail":"Handball starts Fri in PE","links":""},{"row":8,"done":false,"date":"2026-11-12T00:00:00.000Z","day":"Thu 12","section":"Fun & extra","priority":"","subject":"Orchestra","title":"Decide: All-County?","step":"Tell a grown-up your answer today","detail":"Sign-up ends Fri — decide today!","links":""},{"row":9,"done":false,"date":"2026-11-12T00:00:00.000Z","day":"Thu 12","section":"Fun & extra","priority":"","subject":"Fun!","title":"Pick a Bright Outfit","step":"Pick out something bright to wear tonight","detail":"Neonverse party is Fri night!","links":""},{"row":10,"done":false,"date":"2026-11-13T00:00:00.000Z","day":"Fri 13","section":"Homework","priority":"Minor Summative","subject":"Science • Redcay","title":"Astronomy Quiz #3 — DUE Fri","step":"Do practice first — it's graded!","detail":"Start Thu","links":"Astronomy Study Guide: https://docs.google.com/presentation/d/1JcQ3FZYs3oZ_iFq4CABI2lYwrRxGg-d1v_JyVJqyyII/edit?usp=sharing | Review Games: https://docs.google.com/spreadsheets/d/1dO5Kc2_v_LB_kM6_XQTYJWL7TBNnrAmyD3xCnZHAcpU/edit?gid=1349913730"},{"row":11,"done":false,"date":"2026-11-13T00:00:00.000Z","day":"Fri 13","section":"Homework","priority":"Summative","subject":"Math • Dimasi","title":"Start Math Integers Test","step":"Do 10 practice problems today","detail":"Test is Mon — start today!","links":"Math Unit Agenda: https://docs.google.com/document/d/125BgiK52EV0vsolGjTtZiBI8fWbvexe3uAmgBjSH4P4/edit?usp=sharing"},{"row":12,"done":false,"date":"2026-11-13T00:00:00.000Z","day":"Fri 13","section":"Fun & extra","priority":"","subject":"PE • Greene","title":"Handball Starts!","step":"","detail":"New PE unit — have fun!","links":""},{"row":13,"done":false,"date":"2026-11-13T00:00:00.000Z","day":"Fri 13","section":"Fun & extra","priority":"","subject":"Orchestra","title":"All-County Sign-Up?","step":"","detail":"Last day — ask if you want to audition","links":""},{"row":14,"done":false,"date":"2026-11-13T00:00:00.000Z","day":"Fri 13","section":"Fun & extra","priority":"","subject":"Fun!","title":"Neonverse Party!","step":"","detail":"7–9pm at Willard","links":""},{"row":15,"done":false,"date":"2026-11-14T00:00:00.000Z","day":"Sat 14","section":"Fun & extra","priority":"","subject":"Dance","title":"Get Ready for Nutcracker","step":"Lay out your costume + pack a snack & water","detail":"Rehearsal is Sun — get ready today!","links":""},{"row":16,"done":false,"date":"2026-11-15T00:00:00.000Z","day":"Sun 15","section":"Fun & extra","priority":"","subject":"Dance","title":"Nutcracker Rehearsal","step":"","detail":"12:45–5pm • Hair & makeup done, in costume!","links":""},{"row":17,"done":false,"date":"2026-11-15T00:00:00.000Z","day":"Sun 15","section":"Homework","priority":"Major Summative","subject":"History • Laabs","title":"Start History Review","step":"Review a little tonight, then a bit each night","detail":"BIG test is Wed — start today!","links":"Unit 5 Newsletter: https://app.smore.com/n/j7z6g | History Class Website: https://sites.google.com/lcps.org/wms6thgradeushistory/home"},{"row":18,"done":false,"date":"2026-11-15T00:00:00.000Z","day":"Sun 15","section":"Homework","priority":"Major Summative","subject":"Science • Redcay","title":"Start Astronomy Workbook","step":"Workbook pages 43–52 — do a few pages today","detail":"BIG test is Thu — start today!","links":"Astronomy Study Guide: https://docs.google.com/presentation/d/1JcQ3FZYs3oZ_iFq4CABI2lYwrRxGg-d1v_JyVJqyyII/edit?usp=sharing"},{"row":19,"done":false,"date":"2026-11-15T00:00:00.000Z","day":"Sun 15","section":"Fun & extra","priority":"","subject":"Dance","title":"Pick Spirit Wear Size","step":"Pick your size with a grown-up today","detail":"Orders end Mon — pick today!","links":""},{"row":20,"done":false,"date":"2026-11-16T00:00:00.000Z","day":"Mon 16","section":"Homework","priority":"Summative","subject":"Math • Dimasi","title":"Math Integers Test","step":"","detail":"Adding & subtracting integers","links":"Math Unit Agenda: https://docs.google.com/document/d/125BgiK52EV0vsolGjTtZiBI8fWbvexe3uAmgBjSH4P4/edit?usp=sharing"},{"row":21,"done":false,"date":"2026-11-16T00:00:00.000Z","day":"Mon 16","section":"Fun & extra","priority":"","subject":"Dance","title":"Spirit Wear Last Day","step":"","detail":"Nutcracker orders end today","links":""},{"row":22,"done":false,"date":"2026-11-17T00:00:00.000Z","day":"Tue 17","section":"Fun & extra","priority":"","subject":"Dance","title":"Remind a Grown-Up: Bouquets!","step":"Remind a grown-up to order them today","detail":"Bouquet orders are due Thu","links":""},{"row":23,"done":false,"date":"2026-11-18T00:00:00.000Z","day":"Wed 18","section":"Homework","priority":"Major Summative","subject":"History • Laabs","title":"History BIG Test","step":"","detail":"Unit 5 Major Summative — you got this!","links":"Unit 5 Newsletter: https://app.smore.com/n/j7z6g | History Class Website: https://sites.google.com/lcps.org/wms6thgradeushistory/home"},{"row":24,"done":false,"date":"2026-11-18T00:00:00.000Z","day":"Wed 18","section":"Fun & extra","priority":"","subject":"After School","title":"Doctor at 2:45pm","step":"Morning: backpack packed & ready to go","detail":"Dermatology appointment","links":""},{"row":25,"done":false,"date":"2026-11-19T00:00:00.000Z","day":"Thu 19","section":"Homework","priority":"Major Summative","subject":"Science • Redcay","title":"Astronomy BIG Test","step":"","detail":"Moon, tides, seasons & eclipses","links":"Astronomy Study Guide: https://docs.google.com/presentation/d/1JcQ3FZYs3oZ_iFq4CABI2lYwrRxGg-d1v_JyVJqyyII/edit?usp=sharing"},{"row":26,"done":false,"date":"2026-11-19T00:00:00.000Z","day":"Thu 19","section":"Fun & extra","priority":"","subject":"Dance","title":"Bouquets Due","step":"","detail":"Nutcracker flowers — last day!","links":""}];
+
+      var COLORS = {
+        coral:  { bg: "#FFF0F0", border: "#FF6B6B", chip: "#FF6B6B", text: "#8B1E1E" },
+        teal:   { bg: "#E6FAF7", border: "#00B8A9", chip: "#00A896", text: "#065F56" },
+        yellow: { bg: "#FFF8D6", border: "#FFC93C", chip: "#E9A800", text: "#6B4E00" },
+        violet: { bg: "#EFEAFF", border: "#7C5CFF", chip: "#7C5CFF", text: "#3B2A7A" },
+        pink:   { bg: "#FFEAF3", border: "#FF8FAB", chip: "#E85D8A", text: "#7A1E3F" },
+        sky:    { bg: "#E6F6FF", border: "#4CC9F0", chip: "#1E9BD8", text: "#0B4A66" }
+      };
+
+      function rankOf(priority) {
+        if (priority === "Major Summative") return 0;
+        if (priority === "Minor Summative" || priority === "Summative") return 1;
+        if (priority === "Formative") return 2;
+        return 3;
+      }
+      function badgeFor(t) {
+        var r = rankOf(t.priority);
+        if (!t.priority) return null;
+        if (r === 0) return { cls: "badge-major", label: "🏆 " + t.priority.toUpperCase() };
+        if (r === 1) return { cls: "badge-minor", label: "⭐ " + t.priority.toUpperCase() };
+        if (r === 2) return { cls: "badge-formative", label: "✏️ " + t.priority.toUpperCase() };
+        return null;
+      }
+      var TAGS = {
+        "Math Test Day": "TEST", "Math Integers Test": "TEST",
+        "History BIG Test": "BIG TEST", "Astronomy BIG Test": "BIG TEST",
+        "Astronomy Quiz #3 — DUE Fri": "QUIZ",
+        "History IRW Due": "DUE", "Spirit Wear Last Day": "DUE", "Bouquets Due": "DUE",
+        "Sneakers by the Door": "GET READY", "Pick a Bright Outfit": "GET READY",
+        "Get Ready for Nutcracker": "GET READY", "Pick Spirit Wear Size": "GET READY",
+        "Decide: All-County?": "DECIDE TODAY", "All-County Sign-Up?": "YOUR CHOICE",
+        "Handball Starts!": "FUN", "Neonverse Party!": "PARTY",
+        "Nutcracker Rehearsal": "BIG DAY", "Remind a Grown-Up: Bouquets!": "REMIND"
+      };
+      function styleFor(t) {
+        var title = t.title, subj = t.subject || "";
+        if (title.indexOf("Start ") === 0) return styleForTitle(title.slice(6), subj, true);
+        return styleForTitle(title, subj, false);
+      }
+      function styleForTitle(title, subj, isStart) {
+        if (title.indexOf("Math") === 0) return { emoji: title.indexOf("Integers") >= 0 ? "➕" : "🔢", color: "teal" };
+        if (title.indexOf("Astronomy Workbook") >= 0 || title.indexOf("Astronomy BIG") >= 0) return { emoji: "🌙", color: "coral" };
+        if (title.indexOf("Astronomy") >= 0) return { emoji: "🪐", color: "coral" };
+        if (title.indexOf("Book Club") >= 0) return { emoji: "📖", color: "yellow" };
+        if (title.indexOf("History BIG") >= 0 || title.indexOf("History Review") >= 0) return { emoji: "🏆", color: "violet" };
+        if (title.indexOf("History") >= 0) return { emoji: "🏛️", color: "violet" };
+        if (title.indexOf("Cello") >= 0) return { emoji: "🎵", color: "pink" };
+        if (title.indexOf("Sneakers") >= 0 || title.indexOf("Handball") >= 0) return { emoji: "🤾", color: "sky" };
+        if (title.indexOf("All-County") >= 0) return { emoji: "🎵", color: "pink" };
+        if (title.indexOf("Bright Outfit") >= 0 || title.indexOf("Neonverse") >= 0) return { emoji: "🌟", color: "violet" };
+        if (title.indexOf("Nutcracker") >= 0) return { emoji: "🩰", color: "pink" };
+        if (title.indexOf("Spirit Wear") >= 0) return { emoji: "👕", color: "sky" };
+        if (title.indexOf("Bouquets") >= 0) return { emoji: "💐", color: "pink" };
+        if (title.indexOf("Doctor") >= 0) return { emoji: "🩺", color: "sky" };
+        if (subj.indexOf("Math") === 0) return { emoji: "🔢", color: "teal" };
+        if (subj.indexOf("Science") === 0) return { emoji: "🪐", color: "coral" };
+        if (subj.indexOf("English") === 0) return { emoji: "📖", color: "yellow" };
+        if (subj.indexOf("History") === 0) return { emoji: "🏛️", color: "violet" };
+        if (subj.indexOf("Dance") === 0) return { emoji: "🩰", color: "pink" };
+        return { emoji: isStart ? "🚀" : "⭐", color: "teal" };
+      }
+      function parseLinks(raw) {
+        if (!raw) return [];
+        return raw.split(" | ").map(function (part) {
+          var m = part.match(/^(.+?):\s*(https?:\/\/\S+)$/);
+          if (!m) return null;
+          var label = m[1].trim();
+          var pretty = label;
+          if (label === "Astronomy Study Guide") pretty = "📚 Astronomy Study Guide";
+          else if (label === "Review Games") pretty = "🎮 Astronomy Review Games";
+          else if (label.indexOf("Flashcards") === 0) pretty = "🃏 " + label;
+          else if (label === "Math Unit Agenda") pretty = "📐 Math Unit Agenda";
+          else if (label === "Unit 5 Newsletter") pretty = "📰 Unit 5 Newsletter";
+          else if (label === "History Class Website") pretty = "🏛️ History Class Website";
+          return { label: pretty, rawLabel: label, url: m[2] };
+        }).filter(Boolean);
+      }
+      function dateKeyOf(t) { return (t.date || "").slice(0, 10); }
+      function weekdayOf(key) {
+        var d = new Date(key + "T12:00:00");
+        return isNaN(d.getTime()) ? "" : d.toLocaleDateString("en-US", { weekday: "long" });
+      }
+      function todayKey() {
+        var n = new Date();
+        var m = String(n.getMonth() + 1); if (m.length < 2) m = "0" + m;
+        var d = String(n.getDate()); if (d.length < 2) d = "0" + d;
+        return n.getFullYear() + "-" + m + "-" + d;
+      }
+      function esc(s) {
+        return String(s == null ? "" : s).replace(/[&<>"']/g, function (c) {
+          return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c];
+        });
+      }
+
+      var tasks = FALLBACK_TASKS.slice();
+      var selectedDay = null;
+      var live = false;
+      var savingRows = {};
+
+      function daysList() {
+        var seen = {}, out = [];
+        tasks.forEach(function (t) {
+          var k = dateKeyOf(t);
+          if (!seen[k]) { seen[k] = true; out.push({ key: k, label: t.day || k, weekday: weekdayOf(k) }); }
+        });
+        out.sort(function (a, b) { return a.key < b.key ? -1 : 1; });
+        return out;
+      }
+      function homework() { return tasks.filter(function (t) { return t.section !== "Fun & extra"; }); }
+
+      function setSync(msg) { document.getElementById("sync-status").textContent = msg; }
+      function showToast(msg) {
+        var el = document.getElementById("toast");
+        if (!msg) { el.style.display = "none"; el.textContent = ""; return; }
+        el.style.display = "block"; el.textContent = msg;
+      }
+
+      function render() {
+        var days = daysList();
+        if (!selectedDay || !days.some(function (d) { return d.key === selectedDay; })) {
+          var tk = todayKey();
+          var withHw = days.filter(function (d) {
+            return homework().some(function (t) { return dateKeyOf(t) === d.key && !t.done; });
+          });
+          selectedDay = days.some(function (d) { return d.key === tk; }) ? tk : (withHw.length ? withHw[0].key : (days[0] && days[0].key));
+        }
+        var hw = homework();
+        var doneAll = tasks.filter(function (t) { return t.done; }).length;
+        document.getElementById("stars").textContent = "⭐ " + doneAll + (doneAll === 1 ? " star" : " stars");
+
+        var tk2 = todayKey();
+        var hwDone = hw.filter(function (t) { return t.done; }).length;
+        var pct = hw.length ? Math.round(hwDone / hw.length * 100) : 0;
+        var todayHw = hw.filter(function (t) { return dateKeyOf(t) === tk2; });
+        var todayDone = todayHw.filter(function (t) { return t.done; }).length;
+        var label;
+        if (selectedDay === tk2 && todayHw.length) {
+          label = todayDone === todayHw.length ? "🎉 TODAY'S HOMEWORK = DONE! Amazing!" : "Today's homework: " + todayDone + " of " + todayHw.length + " done";
+        } else {
+          label = "Homework all week: " + hwDone + " of " + hw.length + " done";
+        }
+        document.getElementById("progress-label").textContent = label;
+        document.getElementById("progress-pct").textContent = pct + "%";
+        document.getElementById("progress-fill").style.width = pct + "%";
+        document.getElementById("progress-bar").setAttribute("aria-valuenow", String(pct));
+
+        // Biggest first strip
+        var sf = hw.filter(function (t) { return !t.done && rankOf(t.priority) <= 1 && dateKeyOf(t) >= tk2; })
+          .sort(function (a, b) { return rankOf(a.priority) - rankOf(b.priority) || (dateKeyOf(a) < dateKeyOf(b) ? -1 : 1) || a.row - b.row; })
+          .slice(0, 3);
+        var sfWrap = document.getElementById("start-first");
+        var sfList = document.getElementById("start-first-list");
+        if (sf.length) {
+          sfWrap.style.display = "block";
+          sfList.innerHTML = sf.map(function (t, i) {
+            var c = COLORS[styleFor(t).color] || COLORS.teal;
+            var badgeBg = rankOf(t.priority) === 0 ? "#B91C1C" : "#EA580C";
+            return '<button type="button" data-jump="' + esc(dateKeyOf(t)) + '" aria-label="Jump to ' + esc(t.title) + ', due ' + esc(t.day) + '" style="border:2px solid ' + c.border + ';">' +
+              '<span class="numdot" style="background:' + badgeBg + ';">' + (i + 1) + '</span>' +
+              '<span style="font-size:24px;line-height:1;" aria-hidden="true">' + styleFor(t).emoji + '</span>' +
+              '<span style="flex:1;min-width:0;"><span class="font-display" style="display:block;font-weight:800;font-size:16px;line-height:1.15;color:var(--ink);">' + esc(t.title) + '</span>' +
+              '<span style="display:block;font-size:13px;font-weight:700;color:var(--dim);">' + esc(t.priority) + ' • Due ' + esc(t.day) + '</span></span>' +
+              '<span aria-hidden="true" style="font-weight:900;font-size:18px;color:' + c.chip + ';">→</span></button>';
+          }).join("");
+          Array.prototype.forEach.call(sfList.querySelectorAll("[data-jump]"), function (btn) {
+            btn.addEventListener("click", function () { selectedDay = btn.getAttribute("data-jump"); render(); window.scrollTo({ top: 0, behavior: "smooth" }); });
+          });
+        } else { sfWrap.style.display = "none"; sfList.innerHTML = ""; }
+
+        // Day picker
+        var nav = document.getElementById("day-nav");
+        nav.innerHTML = days.map(function (d) {
+          var left = hw.filter(function (t) { return dateKeyOf(t) === d.key && !t.done; }).length;
+          var isToday = d.key === tk2;
+          return '<button type="button" data-day="' + esc(d.key) + '" class="' + (d.key === selectedDay ? "active" : "") + '" aria-label="Show ' + esc(d.weekday) + ' ' + esc(d.label) + (isToday ? ", today" : "") + '">' +
+            esc(d.label) + (isToday ? " • Today" : "") + (left === 0 ? " ✓" : "") + '</button>';
+        }).join("");
+        Array.prototype.forEach.call(nav.querySelectorAll("[data-day]"), function (btn) {
+          btn.addEventListener("click", function () { selectedDay = btn.getAttribute("data-day"); render(); });
+        });
+
+        // Cards
+        function byPriority(a, b) { return rankOf(a.priority) - rankOf(b.priority) || a.row - b.row; }
+        var dayHw = tasks.filter(function (t) { return dateKeyOf(t) === selectedDay && t.section !== "Fun & extra"; }).sort(byPriority);
+        var dayEx = tasks.filter(function (t) { return dateKeyOf(t) === selectedDay && t.section === "Fun & extra"; }).sort(function (a, b) { return a.row - b.row; });
+
+        document.getElementById("homework-list").innerHTML = dayHw.length
+          ? '<div class="stack">' + dayHw.map(function (t) { return cardHtml(t, false); }).join("") + '</div>'
+          : '<p class="empty-note">No homework this day! 🎉</p>';
+
+        var exWrap = document.getElementById("extras-wrap");
+        if (dayEx.length) {
+          exWrap.style.display = "block";
+          document.getElementById("extras-list").innerHTML = dayEx.map(function (t) { return cardHtml(t, true); }).join("");
+        } else { exWrap.style.display = "none"; document.getElementById("extras-list").innerHTML = ""; }
+
+        Array.prototype.forEach.call(document.querySelectorAll("[data-toggle]"), function (btn) {
+          btn.addEventListener("click", function () { toggleTask(parseInt(btn.getAttribute("data-toggle"), 10)); });
+        });
+      }
+
+      function cardHtml(t, extra) {
+        var st = styleFor(t);
+        var c = COLORS[st.color] || COLORS.teal;
+        var badge = !extra ? badgeFor(t) : null;
+        var tag = TAGS[t.title] || (t.title.indexOf("Start ") === 0 ? "START" : "");
+        var detail = t.detail || "";
+        var startChip = "";
+        if (/^Start \S+$/.test(detail)) { startChip = detail; detail = ""; }
+        var links = parseLinks(t.links);
+        var html = '<article class="card' + (t.done ? " done" : "") + '" style="background:' + c.bg + ';border-color:' + c.border + ';">' +
+          '<span class="emoji" aria-hidden="true">' + st.emoji + '</span>' +
+          '<div style="flex:1;min-width:0;">' +
+            '<div class="badges"><h3>' + esc(t.title) + '</h3>' +
+            (badge ? '<span class="badge ' + badge.cls + '">' + esc(badge.label) + '</span>' : '') +
+            (tag ? '<span class="tag-chip" style="background:' + c.chip + ';">' + esc(tag) + '</span>' : '') +
+            (startChip && !t.done ? '<span class="start-chip">🗓️ ' + esc(startChip) + '</span>' : '') +
+            '</div>' +
+            (detail ? '<p class="detail" style="color:' + c.text + ';">' + esc(detail) + '</p>' : '') +
+            (t.step ? '<p class="step">👉 First step: ' + esc(t.step) + '</p>' : '') +
+            (links.length ? '<p class="tap-label">Tap to open 👇</p><div class="linkpills">' + links.map(function (l) {
+              return '<a href="' + esc(l.url) + '" target="_blank" rel="noreferrer" aria-label="Open ' + esc(l.rawLabel) + ' for ' + esc(t.title) + '">' + esc(l.label) + '</a>';
+            }).join("") + '</div>' : '') +
+            '<p class="subject">' + esc(t.subject) + '</p>' +
+          '</div>' +
+          '<button type="button" class="checkbtn' + (t.done ? " done" : "") + (savingRows[t.row] ? " saving" : "") + '" data-toggle="' + t.row + '" aria-pressed="' + (t.done ? "true" : "false") + '" aria-label="' + (t.done ? "Uncheck " : "Check off ") + esc(t.title) + '" style="border:3px solid ' + c.border + ';color:' + c.border + ';">' + (t.done ? "✓" : "") + '</button>' +
+        '</article>';
+        return html;
+      }
+
+      function toggleTask(row) {
+        var t = tasks.filter(function (x) { return x.row === row; })[0];
+        if (!t || savingRows[row]) return;
+        var next = !t.done;
+        t.done = next; // optimistic — feels instant for Eva
+        savingRows[row] = true;
+        render();
+        setSync("☁️ Saving to the shared Sheet…");
+        fetch(BRIDGE_URL, {
+          method: "POST",
+          headers: { "Content-Type": "text/plain;charset=utf-8" },
+          body: JSON.stringify({ row: row, done: next })
+        }).then(function (r) { return r.json(); }).then(function (res) {
+          delete savingRows[row];
+          if (!res || res.ok !== true) throw new Error("save failed");
+          live = true;
+          setSync("☁️ Synced with the shared Sheet ✓");
+          showToast("");
+          render();
+        }).catch(function () {
+          delete savingRows[row];
+          t.done = !next; // put it back — the Sheet didn't save it
+          setSync("⚠️ Couldn't save — check your internet and try again");
+          showToast("That tick didn't save to the Sheet, so I put it back. Tap it again when you're back online.");
+          render();
+        });
+      }
+
+      function loadTasks(manual) {
+        if (manual) setSync("☁️ Refreshing from the shared Sheet…");
+        fetch(BRIDGE_URL + "?v=" + Date.now(), { method: "GET" })
+          .then(function (r) { return r.json(); })
+          .then(function (data) {
+            if (!data || !Array.isArray(data.tasks) || !data.tasks.length) throw new Error("empty");
+            // Keep optimistic state for any save still in flight
+            var pending = {};
+            tasks.forEach(function (t) { if (savingRows[t.row]) pending[t.row] = t.done; });
+            tasks = data.tasks.map(function (t) {
+              if (Object.prototype.hasOwnProperty.call(pending, t.row)) t.done = pending[t.row];
+              return t;
+            });
+            live = true;
+            var n = new Date();
+            setSync("☁️ Synced with the shared Sheet • " + n.toLocaleTimeString("en-US", { hour: "numeric", minute: "2-digit" }));
+            showToast("");
+            render();
+          })
+          .catch(function () {
+            if (!live) setSync("⚠️ Couldn't reach the Sheet — showing the copy saved on Nov 12. Tap Refresh to try again.");
+            else setSync("⚠️ Refresh didn't go through — showing the last synced copy.");
+            render();
+          });
+      }
+
+      document.getElementById("refresh-btn").addEventListener("click", function () { loadTasks(true); });
+      document.addEventListener("visibilitychange", function () { if (!document.hidden) loadTasks(false); });
+      setInterval(function () { if (!document.hidden) loadTasks(false); }, 60000);
+
+      render();
+      loadTasks(false);
+    </script>
+  </body>
+</html>
