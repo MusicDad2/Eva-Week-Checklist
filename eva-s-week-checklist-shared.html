@@ -1,0 +1,1736 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <meta name="color-scheme" content="light dark" />
+    <link rel="icon" href="data:," />
+    <title>Eva's Week Checklist — Shared</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@600;700;800&family=Nunito:wght@600;700;800;900&display=swap" rel="stylesheet" />
+    <style>
+      button, [role="button"], select, summary, a { min-height: 2rem; }
+      * { box-sizing: border-box; }
+      :root {
+        --bg: #FFF9F0;
+        --surface: #FFFFFF;
+        --ink: #1E1B2E;
+        --dim: #45405C;
+        --line: #EDE3D3;
+        --link: #1E40AF;
+        --control-line: #9A8FB5;
+        --extras-bg: #F5F0FF;
+        --start-bg: #FFF3D6;
+        --start-line: #E9A800;
+        --cello-bg: #FFEAF3;
+        --cello-border: #FF8FAB;
+        --cello-badge-bg: #BE185D;
+        color-scheme: light dark;
+      }
+      @media (prefers-color-scheme: dark) {
+        :root {
+          --bg: #17141F;
+          --surface: #242031;
+          --ink: #F6F1E7;
+          --dim: #CFC9E6;
+          --line: #3A3450;
+          --link: #9CC2FF;
+          --control-line: #6E6390;
+          --extras-bg: #2A2140;
+          --start-bg: #3A2E12;
+          --start-line: #E9A800;
+          --cello-bg: #3A2233;
+          --cello-border: #FF8FAB;
+          --cello-badge-bg: #BE185D;
+        }
+      }
+      html, body { margin: 0; padding: 0; }
+      body {
+        background: var(--bg);
+        color: var(--ink);
+        font-family: "Nunito", system-ui, sans-serif;
+        -webkit-font-smoothing: antialiased;
+      }
+      .font-display { font-family: "Baloo 2", "Nunito", system-ui, sans-serif; }
+      main { max-width: 1100px; margin: 0 auto; padding: 1.25rem 1rem 2.5rem; width: 100%; }
+      .header-row { display: flex; align-items: flex-start; justify-content: space-between; gap: 1rem; }
+      .hero-title { margin: 0; font-size: 34px; line-height: 1; font-weight: 800; }
+      .hero-sub { margin: .5rem 0 0; font-size: 17px; font-weight: 700; color: var(--dim); }
+      .joke-setup {
+        margin: 1rem 0 0; background: var(--surface); border: 3px dashed #B45309; border-radius: 24px;
+        padding: .85rem 1.1rem; font-family: "Baloo 2", sans-serif; font-weight: 700;
+        font-size: 18px; line-height: 1.35; color: var(--ink);
+        display: flex; flex-direction: column; gap: .85rem;
+      }
+      @media (min-width: 700px) { .joke-setup { flex-direction: row; align-items: flex-start; } }
+      .joke-setup .joke-text { flex: 1 1 auto; min-width: 0; margin: 0; }
+      .joke-img {
+        width: 300px; max-width: 100%; height: auto; aspect-ratio: 1 / 1; object-fit: cover;
+        border-radius: 18px; display: block; flex-shrink: 0; margin: 0 auto;
+      }
+      @media (min-width: 700px) { .joke-img { margin: 0; } }
+      .joke-setup .joke-hint { display: block; margin-top: .25rem; font-family: "Nunito", sans-serif; font-size: 13px; font-weight: 800; color: var(--dim); }
+      .joke-punchline {
+        margin: 1rem 0 0; background: var(--surface); border: 3px solid #00796B; border-radius: 24px;
+        padding: .85rem 1.1rem; text-align: center; font-family: "Baloo 2", sans-serif; font-weight: 700;
+        font-size: 18px; line-height: 1.35; color: var(--ink);
+      }
+      @media (min-width: 900px) { .joke-setup, .joke-punchline { font-size: 20px; } }
+      .cards-grid { display: flex; flex-direction: column; gap: .75rem; margin-top: .75rem; }
+      /* Wide screens — Chromebook / desktop: use the extra width */
+      @media (min-width: 900px) {
+        main { padding: 2rem 2rem 3.5rem; }
+        .hero-title { font-size: 46px; }
+        .hero-sub { font-size: 19px; }
+        .stars-pill { font-size: 18px; padding: .65rem 1.1rem; }
+        .top-panels { display: grid; grid-template-columns: 1fr; gap: 1rem; align-items: stretch; margin-top: 1rem; }
+        .top-panels .panel { margin-top: 0 !important; padding: 1.25rem; }
+        .daynav { flex-wrap: wrap; gap: .6rem; margin-top: 1.5rem; }
+        .daynav button { flex: 1 1 110px; padding: .65rem .5rem; font-size: 17px; white-space: nowrap; text-align: center; }
+        .cards-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 1rem; align-items: start; }
+        #extras-list { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 1rem; }
+        #extras-list.stack { margin-top: 1rem; }
+        .card { padding: 1.15rem; height: 100%; }
+        .card .emoji { font-size: 48px; }
+        .card h3 { font-size: 22px; }
+        .card .detail { font-size: 16px; }
+        .card .step { font-size: 15px; }
+        .extras { padding: 1.25rem; }
+        .biglink { font-size: 18px; }
+      }
+      button { font-family: inherit; cursor: pointer; }
+      a { color: var(--link); }
+
+      .stars-pill {
+        background: #FFD93D; color: #1E1B2E;
+        border-radius: 999px; padding: .5rem .9rem;
+        font-family: "Baloo 2", sans-serif; font-weight: 800; font-size: 15px;
+        white-space: nowrap;
+        display: inline-flex; align-items: center; gap: .45rem;
+      }
+      .rainbow-star { flex-shrink: 0; display: inline-block; vertical-align: middle; filter: drop-shadow(0 1px 1px rgba(30,27,46,.35)); }
+      .past-weeks { margin-top: 1.25rem; display: flex; flex-direction: column; gap: 1.25rem; }
+      .past-weeks[hidden] { display: none; }
+      .past-week {
+        background: var(--surface); border: 3px solid #F2C230; border-radius: 24px; padding: 1rem;
+      }
+      @media (prefers-color-scheme: dark) { .past-week { border-color: #6B5810; } }
+      .past-week-head { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: .6rem; }
+      .past-week-head h3 { margin: 0; font-family: "Baloo 2", sans-serif; font-weight: 800; font-size: 24px; line-height: 1.15; }
+      .past-week-meta { margin: .35rem 0 0; font-size: 14px; font-weight: 700; color: var(--dim); }
+      .past-week .cards-grid { margin-top: .85rem; }
+      .past-subhead { margin: 1rem 0 0; font-family: "Baloo 2", sans-serif; font-weight: 800; font-size: 18px; }
+      .checkcircle {
+        flex-shrink: 0; display: grid; place-items: center;
+        min-width: 56px; min-height: 56px; border-radius: 999px;
+        font-weight: 900; font-size: 26px; background: #fff; border: 3px solid;
+      }
+      .checkcircle.done { background: #15803D !important; color: #fff !important; border-color: #15803D !important; }
+      .day-chip { border-radius: 999px; padding: .15rem .55rem; font-size: 11px; font-weight: 900; background: var(--surface); color: var(--ink); border: 2px solid var(--control-line); }
+      button.biglink { width: 100%; color: var(--ink); cursor: pointer; }
+      .panel {
+        background: var(--surface);
+        border: 3px solid #F2C230;
+        border-radius: 24px; padding: 1rem;
+      }
+      @media (prefers-color-scheme: dark) { .panel { border-color: #6B5810; } }
+      .panel-plain { border: 2px solid var(--line); }
+      .bar-track { height: 20px; border-radius: 999px; background: #FFF1C9; overflow: hidden; margin-top: .75rem; }
+      @media (prefers-color-scheme: dark) { .bar-track { background: #3A3450; } }
+      .bar-fill { height: 100%; border-radius: 999px; background: linear-gradient(90deg,#FF6B6B,#FFC93C,#00B8A9,#4CC9F0,#7C5CFF); transition: width .5s ease; }
+
+      .cello-summary {
+        display: flex; align-items: center; justify-content: space-between; gap: 1rem;
+        background: var(--cello-bg); border: 3px solid var(--cello-border);
+        border-radius: 24px; padding: 1rem; margin-top: 1rem; color: var(--ink);
+      }
+      .cello-summary h2 { margin: 0; font-family: "Baloo 2", sans-serif; font-weight: 800; font-size: 22px; line-height: 1.15; }
+      .cello-summary p { margin: .35rem 0 0; font-size: 15px; font-weight: 700; line-height: 1.35; }
+      .cello-total-badge {
+        flex-shrink: 0; background: var(--cello-badge-bg); color: #fff;
+        border-radius: 999px; padding: .7rem 1.1rem; min-width: 96px;
+        text-align: center; font-family: "Baloo 2", sans-serif; font-weight: 800;
+        font-size: 20px; line-height: 1.1;
+      }
+      @media (min-width: 900px) {
+        .cello-summary { padding: 1.25rem; }
+        .cello-summary h2 { font-size: 24px; }
+        .cello-summary p { font-size: 16px; }
+        .cello-total-badge { font-size: 22px; padding: .8rem 1.25rem; }
+      }
+      .cello-box {
+        margin-top: .6rem; background: rgba(255,255,255,.65);
+        border: 2px dashed #FF8FAB; border-radius: 16px; padding: .65rem .75rem;
+      }
+      .cello-box-label { margin: 0; font-size: 13px; font-weight: 900; color: #7A1E3F; }
+      .cello-btns { display: flex; flex-wrap: wrap; gap: .45rem; margin-top: .5rem; }
+      .cello-btn {
+        border-radius: 999px; padding: .45rem .85rem; min-height: 44px;
+        font-family: "Baloo 2", sans-serif; font-weight: 800; font-size: 15px;
+        background: #fff; color: #BE185D; border: 2px solid #BE185D;
+      }
+      .cello-btn.active { background: #BE185D; color: #fff; border-color: #BE185D; }
+      .cello-btn.saving { opacity: .55; }
+      .cello-logged { margin: .5rem 0 0; font-size: 13px; font-weight: 800; color: #7A1E3F; }
+
+      .tag-chip { border-radius: 999px; padding: .15rem .55rem; font-size: 11px; font-weight: 900; color: #fff; }
+      .urgent-chip { border-radius: 999px; padding: .3rem .7rem; font-size: 14px; font-weight: 900; letter-spacing: .04em; background: #C92A2A; color: #fff; border: 2px solid #7A1010; }
+      .start-chip { border-radius: 999px; padding: .15rem .55rem; font-size: 11px; font-weight: 900; background: #FFF3D6; color: #6B4E00; border: 2px solid #E9A800; }
+
+      .daynav { display: flex; flex-wrap: wrap; gap: .5rem; margin-top: 1.25rem; }
+      .daynav button {
+        border-radius: 999px; padding: .5rem 1rem; min-height: 44px;
+        font-family: "Baloo 2", sans-serif; font-weight: 800; font-size: 16px;
+        background: var(--surface); color: var(--ink); border: 2px solid var(--control-line);
+      }
+      .daynav button.active { background: #1E1B2E; color: #fff; border-color: #1E1B2E; }
+      @media (prefers-color-scheme: dark) { .daynav button.active { background: #F6F1E7; color: #1E1B2E; border-color: #F6F1E7; } }
+
+      .card {
+        display: flex; align-items: center; gap: .75rem;
+        border-radius: 24px; padding: 1rem; border: 3px solid;
+        color: #1E1B2E;
+      }
+      .card.done { background: #F3F4F6 !important; border-color: #9AA1AD !important; opacity: .85; }
+      @media (prefers-color-scheme: dark) { .card.done { background: #DDD9E4 !important; border-color: #9A8FB5 !important; } }
+      .card .emoji { font-size: 40px; line-height: 1; flex-shrink: 0; }
+      .card h3 { margin: 0; font-family: "Baloo 2", sans-serif; font-weight: 800; line-height: 1.15; font-size: 21px; color: #1E1B2E; }
+      .card.done h3 { text-decoration: line-through; }
+      .card .detail { margin: .15rem 0 0; font-size: 15px; font-weight: 700; line-height: 1.35; }
+      .card .step { margin: .25rem 0 0; font-size: 14px; font-weight: 800; line-height: 1.35; color: #1E1B2E; }
+      .card .subject { margin: .25rem 0 0; font-size: 12px; font-weight: 900; text-transform: uppercase; letter-spacing: .05em; color: #45405C; }
+      .card .badges { display: flex; flex-wrap: wrap; align-items: center; gap: .4rem; }
+      .checkbtn {
+        flex-shrink: 0; display: grid; place-items: center;
+        min-width: 56px; min-height: 56px; border-radius: 999px;
+        font-weight: 900; font-size: 26px; background: #fff;
+      }
+      .checkbtn.done { background: #15803D !important; color: #fff !important; border-color: #15803D !important; }
+      .checkbtn.saving { opacity: .55; }
+
+      .linkpills { display: flex; flex-wrap: wrap; gap: .4rem; margin-top: .35rem; }
+      .linkpills a {
+        display: inline-flex; align-items: center; min-height: 36px;
+        background: #fff; border: 2px solid #1E1B2E; color: #1E40AF;
+        border-radius: 999px; padding: .3rem .8rem; font-size: 13px; font-weight: 800;
+        text-decoration: underline; text-decoration-thickness: 2px; text-underline-offset: 2px;
+      }
+      .tap-label { margin: .5rem 0 0; font-size: 12px; font-weight: 900; text-transform: uppercase; letter-spacing: .05em; color: #45405C; }
+
+      .extras { background: var(--extras-bg); border: 3px dashed #B79CFF; border-radius: 24px; padding: 1rem; margin-top: 1.5rem; }
+      .extras .card h3, .extras .card .step { color: #1E1B2E; }
+
+      .biglink {
+        display: flex; align-items: center; justify-content: center; gap: .5rem;
+        margin-top: 1.25rem; border-radius: 999px; padding: .75rem 1rem; min-height: 48px;
+        background: var(--surface); border: 2px solid var(--ink);
+        font-family: "Baloo 2", sans-serif; font-weight: 800; font-size: 16px;
+        text-decoration: underline; text-decoration-thickness: 2px; text-underline-offset: 2px;
+      }
+      .syncbar {
+        display: flex; flex-wrap: wrap; align-items: center; gap: .5rem;
+        margin-top: 1rem; font-size: 13px; font-weight: 800; color: var(--dim);
+      }
+      .syncbar button {
+        border-radius: 999px; border: 2px solid var(--control-line); background: var(--surface); color: var(--ink);
+        padding: .35rem .9rem; min-height: 36px; font-weight: 800; font-size: 13px;
+      }
+      #toast {
+        display: none; margin-top: 1rem; border-radius: 16px; padding: .75rem 1rem;
+        background: #FDE8E8; color: #7A1E1E; border: 2px solid #FF6B6B; font-weight: 800; font-size: 14px;
+      }
+      details.grownups { margin-top: 1.5rem; background: var(--surface); border: 2px solid var(--line); border-radius: 24px; padding: 1rem; }
+      details.grownups summary { font-family: "Baloo 2", sans-serif; font-weight: 700; cursor: pointer; min-height: 36px; }
+      details.grownups ul { margin: .5rem 0 0; padding-left: 1.1rem; font-size: 14px; font-weight: 600; line-height: 1.6; color: var(--dim); }
+      .teacher-mail { margin-top: 1.5rem; }
+      .teacher-mail h2 { margin: 0; font-family: "Baloo 2", sans-serif; font-weight: 800; font-size: 17px; }
+      .teacher-pills { display: flex; flex-wrap: wrap; gap: .4rem; margin-top: .55rem; }
+      .teacher-pills a {
+        display: inline-flex; align-items: center; gap: .3rem; min-height: 36px;
+        background: var(--surface); color: var(--ink); border: 2px solid var(--control-line);
+        border-radius: 999px; padding: .3rem .75rem; font-size: 13px; font-weight: 800;
+        text-decoration: none;
+      }
+      .teacher-pills a .subj { color: var(--dim); font-weight: 700; }
+      .stack { display: flex; flex-direction: column; gap: .75rem; margin-top: .75rem; }
+      .empty-note { margin-top: .75rem; text-align: center; font-family: "Baloo 2", sans-serif; font-size: 20px; font-weight: 700; background: var(--surface); border: 2px dashed #C9B99A; border-radius: 24px; padding: 1.25rem; }
+      @media (prefers-reduced-motion: reduce) { .bar-fill { transition: none; } }
+      .week-complete-badge {
+        display: inline-block; margin-top: .6rem; background: #FFD93D; color: #1E1B2E;
+        border: 2px solid #B45309; border-radius: 999px; padding: .35rem .9rem;
+        font-family: "Baloo 2", sans-serif; font-weight: 800; font-size: 15px;
+      }
+      .week-complete-badge[hidden] { display: none; }
+      /* Floating "done" pills — fixed to the bottom corner of the screen so
+         the day / week completion stays visible wherever Eva is scrolled,
+         for the rest of the visit. They never block taps. */
+      #done-pills {
+        position: fixed; right: 1rem; bottom: 1rem; z-index: 997;
+        display: flex; flex-direction: column; align-items: flex-end; gap: .5rem;
+        pointer-events: none;
+      }
+      .done-pill {
+        border-radius: 999px; padding: .5rem 1rem;
+        font-family: "Baloo 2", sans-serif; font-weight: 800; font-size: 16px; line-height: 1.1;
+        box-shadow: 0 8px 22px rgba(30,27,46,.30);
+      }
+      .done-pill[hidden] { display: none; }
+      .done-pill.day { background: #FFD93D; color: #1E1B2E; border: 3px solid #B45309; }
+      .done-pill.week { background: #FFD93D; color: #1E1B2E; border: 3px solid #B45309; font-size: 17px; }
+      #celebration {
+        position: fixed; inset: 0; z-index: 999; pointer-events: none; overflow: hidden;
+        opacity: 1; transition: opacity .8s ease;
+      }
+      #celebration[hidden] { display: none; }
+      #celebration.fading { opacity: 0; }
+      #celebration-canvas { position: absolute; inset: 0; width: 100%; height: 100%; }
+      .celebration-msg {
+        position: absolute; left: 50%; top: 36%; transform: translate(-50%, -50%);
+        background: var(--surface); color: var(--ink); border: 4px solid #F2C230; border-radius: 28px;
+        padding: 1.1rem 1.75rem; text-align: center; max-width: min(92vw, 520px);
+        box-shadow: 0 18px 50px rgba(30,27,46,.35);
+        animation: celeb-pop .55s cubic-bezier(.2,1.6,.4,1) both;
+      }
+      .celebration-title { font-family: "Baloo 2", sans-serif; font-weight: 800; font-size: 42px; line-height: 1.05; }
+      .celebration-sub { margin-top: .35rem; font-size: 16px; font-weight: 800; color: var(--dim); }
+      @media (max-width: 600px) { .celebration-title { font-size: 32px; } .celebration-msg { top: 30%; } }
+      @keyframes celeb-pop { from { transform: translate(-50%, -50%) scale(.6); } to { transform: translate(-50%, -50%) scale(1); } }
+      .celebration-floaty {
+        position: absolute; bottom: -60px; line-height: 1; pointer-events: none;
+        animation-name: celeb-float-up; animation-timing-function: ease-in; animation-fill-mode: forwards;
+      }
+      @keyframes celeb-float-up {
+        0% { transform: translateY(0) rotate(-8deg); opacity: 0; }
+        8% { opacity: 1; }
+        100% { transform: translateY(-115vh) rotate(14deg); opacity: .9; }
+      }
+      /* Small per-day celebration — a modest burst rendered as a fixed
+         overlay covering the current viewport, so Eva sees it wherever
+         she is scrolled. Never blocks taps. */
+      #day-celebration {
+        position: fixed; inset: 0; z-index: 998; pointer-events: none; overflow: hidden;
+        opacity: 1; transition: opacity .4s ease;
+      }
+      #day-celebration[hidden] { display: none; }
+      #day-celebration.fading { opacity: 0; }
+      #day-celebration-canvas { position: absolute; inset: 0; width: 100%; height: 100%; }
+      .day-celebration-msg {
+        position: absolute; left: 50%; top: 14%; transform: translateX(-50%);
+        background: #FFD93D; color: #1E1B2E; border: 3px solid #B45309; border-radius: 999px;
+        padding: .45rem 1.1rem; white-space: nowrap;
+        font-family: "Baloo 2", sans-serif; font-weight: 800; font-size: 20px; line-height: 1.1;
+        box-shadow: 0 8px 22px rgba(30,27,46,.28);
+        animation: day-celeb-pop .45s cubic-bezier(.2,1.6,.4,1) both;
+      }
+      @keyframes day-celeb-pop { from { transform: translateX(-50%) scale(.6); } to { transform: translateX(-50%) scale(1); } }
+      .day-celebration-floaty {
+        position: absolute; bottom: 12px; line-height: 1; pointer-events: none;
+        animation-name: day-celeb-float-up; animation-timing-function: ease-out; animation-fill-mode: forwards;
+      }
+      @keyframes day-celeb-float-up {
+        0% { transform: translateY(0) rotate(-8deg); opacity: 0; }
+        15% { opacity: 1; }
+        100% { transform: translateY(-150px) rotate(16deg); opacity: 0; }
+      }
+      @media (prefers-reduced-motion: reduce) { .celebration-msg, .celebration-floaty, .day-celebration-msg, .day-celebration-floaty { animation: none; } }
+    </style>
+  </head>
+  <body>
+    <svg width="0" height="0" style="position:absolute;" aria-hidden="true" focusable="false">
+      <defs>
+        <linearGradient id="rainbow-star-grad" x1="0%" y1="0%" x2="100%" y2="100%">
+          <stop offset="0%" stop-color="#FF3B30" />
+          <stop offset="20%" stop-color="#FF9500" />
+          <stop offset="40%" stop-color="#FFCC00" />
+          <stop offset="60%" stop-color="#34C759" />
+          <stop offset="80%" stop-color="#0A84FF" />
+          <stop offset="100%" stop-color="#BF5AF2" />
+        </linearGradient>
+      </defs>
+    </svg>
+    <main>
+      <div class="header-row">
+        <div>
+          <h1 class="font-display hero-title" id="greeting">Hi Eva! 👋</h1>
+          <p class="hero-sub">Homework week: Nov 12 – 19</p>
+        </div>
+        <div class="stars-pill" id="stars" aria-label="Stars earned">0 stars</div>
+      </div>
+
+      <div class="joke-setup"><img class="joke-img" id="joke-img" src="https://musicdad2.github.io/Eva-Week-Checklist/images/sneeze-picture-day.webp" data-fb="https://musicdad2.github.io/Eva-Week-Checklist/images/sneeze-picture-day.webp" alt="Cartoon kid sneezing during school picture day, sitting on a stool in front of a blue backdrop while the photographer holds a camera on a tripod" width="300" height="300" /><p class="joke-text" id="joke-setup">😂 Joke of the day: Why was the school bell promoted on Friday?<span class="joke-hint">Think about it… the answer is hiding at the very bottom of the page! 👇</span></p></div>
+
+      <div class="syncbar" aria-live="polite">
+        <span id="sync-status">☁️ Connecting to your shared checklist…</span>
+        <button id="refresh-btn" type="button" aria-label="Refresh from the shared sheet">↻ Refresh</button>
+        <a id="sheet-link" href="https://docs.google.com/spreadsheets/d/1tALFxqBEKovevcPTp6atxbq5tSCjc2jMX0Wkt3bwwx4/edit?usp=sharing" target="_blank" rel="noreferrer" style="font-weight:800;">Open the Sheet</a>
+      </div>
+      <div id="toast" role="alert"></div>
+
+      <div class="top-panels">
+      <section aria-label="Homework progress" class="panel" style="margin-top:1rem;">
+        <div style="display:flex;justify-content:space-between;gap:.5rem;font-family:'Baloo 2',sans-serif;font-weight:700;font-size:16px;">
+          <span id="progress-label">Loading…</span>
+          <span id="progress-pct"></span>
+        </div>
+        <div class="bar-track" role="progressbar" aria-label="Homework progress" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" id="progress-bar">
+          <div class="bar-fill" id="progress-fill" style="width:0%"></div>
+        </div>
+        <span class="week-complete-badge" id="week-complete-badge" hidden>🎉 Week complete!</span>
+        <p style="margin:.5rem 0 0;font-size:14px;font-weight:700;color:var(--dim);">Tap a big circle to check it off — it saves to the shared Sheet, so it shows up on every device. That's it!</p>
+      </section>
+
+      </div>
+
+      <section aria-label="Cello practice this week" class="cello-summary" id="cello-summary">
+        <div style="min-width:0;">
+          <h2>🎵 Cello practice this week</h2>
+          <p id="cello-total-text">Tap the minutes on today's cello card after you practice!</p>
+          <p id="cello-days-text" style="color:var(--dim);"></p>
+        </div>
+        <div class="cello-total-badge" id="cello-total-badge" aria-label="Total cello practice this week">0 min<br /><span style="font-size:13px;font-weight:700;">this week</span></div>
+      </section>
+
+      <nav aria-label="Pick a day" class="daynav" id="day-nav"></nav>
+
+      <section aria-label="Homework for this day" id="homework-section" style="margin-top:1rem;">
+        <h2 class="font-display" style="margin:0;font-size:22px;font-weight:800;">📚 Homework</h2>
+        <div id="homework-list"></div>
+      </section>
+
+      <section aria-label="Fun and extra stuff for this day" class="extras" id="extras-wrap" style="display:none;">
+        <h2 class="font-display" style="margin:0;font-size:20px;font-weight:800;">🎉 Fun &amp; extra stuff</h2>
+        <p style="margin:.25rem 0 0;font-size:13px;font-weight:700;color:var(--dim);">Not homework — parties, dance, and your-choice things live here.</p>
+        <div class="stack" id="extras-list"></div>
+      </section>
+
+      <a class="biglink" href="https://docs.google.com/document/d/1FPAY84ps8RnFcd49tzOMScBchxpK3-BiYChy2IxI4xM/edit?usp=sharing" target="_blank" rel="noreferrer" aria-label="Open The Wonder Grade 6 full list in a new tab">📄 Open The Wonder — Grade 6 (the whole list)</a>
+
+      <p class="joke-punchline" id="joke-punchline">🥁 It always rings in good news.</p>
+
+      <button class="biglink" id="past-weeks-btn" type="button" aria-expanded="false" aria-controls="past-weeks-view" aria-label="See past weeks — show previous checklists: what got done and what didn't">📚 See past weeks — previous checklists: what got done ✓ and what didn't</button>
+
+      <section class="past-weeks" id="past-weeks-view" aria-label="Past weeks" hidden>
+        <div id="past-weeks-list"></div>
+      </section>
+
+      <details class="grownups">
+        <summary aria-label="Show notes for grown-ups">For grown-ups 👨‍👩‍👧</summary>
+        <ul>
+          <li>This page reads and writes the shared Google Sheet “Eva's Week Checklist — Nov 12-19” through the Eva Checklist Bridge. A tick here updates the Sheet, and a tick in the Sheet shows up here on Refresh — so Eva's Chromebook and a parent's phone stay in sync.</li>
+          <li>Homework order: Major Summative → Minor Summative / Summative → Formative → everything else. Fun &amp; extras are in their own section, and the progress bar counts homework only.</li>
+          <li>First steps live on the day to do them, not the due day — quiz prep Thu, math practice Fri, big-test studying Sun, Nutcracker prep Sat, bouquet reminder Tue. Due-day cards keep a small “Start …” chip pointing back.</li>
+          <li>Eva plays cello — Low Strings with Yoo: shifting skills, D &amp; A strings. Each day's cello card has 15 / 30 / 45 / 60 minute buttons; tapping one saves the minutes to the Sheet (column K) and checks the card off. The pink banner at the top totals the week's practice. Unchecking a cello card clears that day's minutes.</li>
+          <li>Stars: late work rolled over as Urgent earns no star, even when finished. Cello stars come from minutes banked — every 15 minutes earns one cello day (up to 7 a week), so extra minutes on one day cover a missed day, and a cello card ticked with 0 minutes earns nothing.</li>
+          <li>Past weeks: the “See past weeks” button opens the archived weeks right on this page as colorful cards from the Sheet's Archive data (the grown-ups' spreadsheet view is still the Archive tab in the Sheet).</li>
+          <li>Study links on the cards come straight from The Wonder (Grade 6): Astronomy study guide, review games, Knowt flashcards, History Unit 5 newsletter &amp; website, Math unit agenda.</li>
+          <li>Nutcracker tickets: $15 pre-sale ($20 day-of) • Spirit wear orders end Mon Nov 16 • Bouquets due Thu Nov 19.</li>
+          <li>Teachers — A Day: Laabs, Dimasi, Yoo • B Day: Redcay, Greene, McCallum • Getz every day.</li>
+          <li>To add a task, add a row in the Sheet — it will appear here on the next refresh.</li>
+        </ul>
+      </details>
+
+      <section class="teacher-mail" aria-label="Email a teacher">
+        <h2>✉️ Email a teacher</h2>
+        <div class="teacher-pills">
+          <a href="mailto:Damon.Laabs@lcps.org?subject=Question%20from%20Eva%20Anderson" target="_blank" rel="noreferrer" aria-label="Email Laabs, History teacher">Laabs <span class="subj">· History</span></a>
+          <a href="mailto:Jennifer.DiMasi@lcps.org?subject=Question%20from%20Eva%20Anderson" target="_blank" rel="noreferrer" aria-label="Email DiMasi, Math teacher">DiMasi <span class="subj">· Math</span></a>
+          <a href="mailto:Somok.Yoo@lcps.org?subject=Question%20from%20Eva%20Anderson" target="_blank" rel="noreferrer" aria-label="Email Yoo, Cello and Low Strings teacher">Yoo <span class="subj">· Cello / Low Strings</span></a>
+          <a href="mailto:Joy.Getz@lcps.org?subject=Question%20from%20Eva%20Anderson" target="_blank" rel="noreferrer" aria-label="Email Getz, English teacher">Getz <span class="subj">· English</span></a>
+          <a href="mailto:Carrie.Redcay@lcps.org?subject=Question%20from%20Eva%20Anderson" target="_blank" rel="noreferrer" aria-label="Email Redcay, Science teacher">Redcay <span class="subj">· Science</span></a>
+          <a href="mailto:sonny.green@lcps.org?subject=Question%20from%20Eva%20Anderson" target="_blank" rel="noreferrer" aria-label="Email Greene, Health and PE teacher">Greene <span class="subj">· Health &amp; PE</span></a>
+          <a href="mailto:Kelsey.McCallum@lcps.org?subject=Question%20from%20Eva%20Anderson" target="_blank" rel="noreferrer" aria-label="Email McCallum, Art teacher">McCallum <span class="subj">· Art</span></a>
+        </div>
+      </section>
+
+      <noscript><p style="font-weight:800;margin-top:1rem;">This checklist needs JavaScript to load from the shared Sheet. You can open the Sheet directly with the “Open the Sheet” link above.</p></noscript>
+    </main>
+
+    <div id="done-pills" aria-live="polite">
+      <div class="done-pill week" id="week-done-pill" hidden>🎉 Week complete!</div>
+      <div class="done-pill day" id="day-done-pill" hidden>Day done! 🌟</div>
+    </div>
+
+    <div id="day-celebration" hidden aria-hidden="true">
+      <canvas id="day-celebration-canvas"></canvas>
+      <div id="day-celebration-floaties"></div>
+      <div class="day-celebration-msg" id="day-celebration-msg" role="status">Day done! 🌟</div>
+    </div>
+
+    <div id="celebration" hidden aria-hidden="true">
+      <canvas id="celebration-canvas"></canvas>
+      <div id="celebration-floaties"></div>
+      <div class="celebration-msg" role="status">
+        <div class="celebration-title">🎉 You did it! 🎉</div>
+        <div class="celebration-sub">You finished EVERYTHING this week — amazing work, Eva! 🌈</div>
+      </div>
+    </div>
+
+    <script>
+      // Bridge for the shared Google Sheet "Eva's Week Checklist — Nov 12-19".
+      // GET returns {tasks:[...]}; POST {row, done} writes the Done checkbox.
+      var BRIDGE_URL = "https://script.google.com/macros/s/AKfycbwm4HP2uFOdjXXMoudweFwl9go23n8eDWyWzqxdtsvbmtUkHHrly9U_kxmiYSGwvjiEQw/exec";
+
+      // Saved copy of the Sheet as read on Thu Nov 12, 2026 — only used if the
+      // bridge can't be reached, so the page never opens blank.
+      var FALLBACK_TASKS = [{"row":2,"done":false,"date":"2026-11-12T00:00:00.000Z","day":"Thu 12","section":"Homework","priority":"Summative","subject":"Math • Dimasi","title":"Math Test Day","step":"","detail":"Summative + integers quiz","links":"Math Unit Agenda: https://docs.google.com/document/d/125BgiK52EV0vsolGjTtZiBI8fWbvexe3uAmgBjSH4P4/edit?usp=sharing"},{"row":3,"done":false,"date":"2026-11-12T00:00:00.000Z","day":"Thu 12","section":"Homework","priority":"Minor Summative","subject":"Science • Redcay","title":"Start Astronomy Quiz #3","step":"Do the Schoology practice first — it's graded","detail":"Quiz is Fri — start tonight!","links":"Astronomy Study Guide: https://docs.google.com/presentation/d/1JcQ3FZYs3oZ_iFq4CABI2lYwrRxGg-d1v_JyVJqyyII/edit?usp=sharing | Review Games: https://docs.google.com/spreadsheets/d/1dO5Kc2_v_LB_kM6_XQTYJWL7TBNnrAmyD3xCnZHAcpU/edit?gid=1349913730 | Flashcards Astronomers: https://knowt.com/flashcards/6c04e512-b008-44bd-952d-47331ddf2088 | Flashcards Sun: https://knowt.com/flashcards/0dfe009e-2001-4f5d-9606-80847a91e857 | Flashcards Planets: https://knowt.com/flashcards/e1b6b08c-f945-491d-875f-f61ddac1e062"},{"row":4,"done":false,"date":"2026-11-12T00:00:00.000Z","day":"Thu 12","section":"Homework","priority":"Formative","subject":"English • Getz","title":"Book Club Meeting","step":"","detail":"Bring sticky notes + plot diagram","links":""},{"row":5,"done":false,"date":"2026-11-12T00:00:00.000Z","day":"Thu 12","section":"Homework","priority":"","subject":"History • Laabs","title":"History IRW Due","step":"","detail":"Unit 5 — hand it in!","links":"Unit 5 Newsletter: https://app.smore.com/n/j7z6g | History Class Website: https://sites.google.com/lcps.org/wms6thgradeushistory/home"},{"row":6,"done":false,"date":"2026-11-12T00:00:00.000Z","day":"Thu 12","section":"Homework","priority":"","subject":"Cello • Yoo — Low Strings","title":"Cello Practice","step":"Just 10 minutes on your cello — slow and steady","detail":"Shifting skills • D & A strings","links":""},{"row":7,"done":false,"date":"2026-11-12T00:00:00.000Z","day":"Thu 12","section":"Fun & extra","priority":"","subject":"PE • Greene","title":"Sneakers by the Door","step":"Put your sneakers by the door tonight","detail":"Handball starts Fri in PE","links":""},{"row":8,"done":false,"date":"2026-11-12T00:00:00.000Z","day":"Thu 12","section":"Fun & extra","priority":"","subject":"Orchestra","title":"Decide: All-County?","step":"Tell a grown-up your answer today","detail":"Sign-up ends Fri — decide today!","links":""},{"row":9,"done":false,"date":"2026-11-12T00:00:00.000Z","day":"Thu 12","section":"Fun & extra","priority":"","subject":"Fun!","title":"Pick a Bright Outfit","step":"Pick out something bright to wear tonight","detail":"Neonverse party is Fri night!","links":""},{"row":10,"done":false,"date":"2026-11-13T00:00:00.000Z","day":"Fri 13","section":"Homework","priority":"Minor Summative","subject":"Science • Redcay","title":"Astronomy Quiz #3 — DUE Fri","step":"Do practice first — it's graded!","detail":"Start Thu","links":"Astronomy Study Guide: https://docs.google.com/presentation/d/1JcQ3FZYs3oZ_iFq4CABI2lYwrRxGg-d1v_JyVJqyyII/edit?usp=sharing | Review Games: https://docs.google.com/spreadsheets/d/1dO5Kc2_v_LB_kM6_XQTYJWL7TBNnrAmyD3xCnZHAcpU/edit?gid=1349913730"},{"row":11,"done":false,"date":"2026-11-13T00:00:00.000Z","day":"Fri 13","section":"Homework","priority":"Summative","subject":"Math • Dimasi","title":"Start Math Integers Test","step":"Do 10 practice problems today","detail":"Test is Mon — start today!","links":"Math Unit Agenda: https://docs.google.com/document/d/125BgiK52EV0vsolGjTtZiBI8fWbvexe3uAmgBjSH4P4/edit?usp=sharing"},{"row":12,"done":false,"date":"2026-11-13T00:00:00.000Z","day":"Fri 13","section":"Fun & extra","priority":"","subject":"PE • Greene","title":"Handball Starts!","step":"","detail":"New PE unit — have fun!","links":""},{"row":13,"done":false,"date":"2026-11-13T00:00:00.000Z","day":"Fri 13","section":"Fun & extra","priority":"","subject":"Orchestra","title":"All-County Sign-Up?","step":"","detail":"Last day — ask if you want to audition","links":""},{"row":14,"done":false,"date":"2026-11-13T00:00:00.000Z","day":"Fri 13","section":"Fun & extra","priority":"","subject":"Fun!","title":"Neonverse Party!","step":"","detail":"7–9pm at Willard","links":""},{"row":15,"done":false,"date":"2026-11-14T00:00:00.000Z","day":"Sat 14","section":"Fun & extra","priority":"","subject":"Dance","title":"Get Ready for Nutcracker","step":"Lay out your costume + pack a snack & water","detail":"Rehearsal is Sun — get ready today!","links":""},{"row":16,"done":false,"date":"2026-11-15T00:00:00.000Z","day":"Sun 15","section":"Fun & extra","priority":"","subject":"Dance","title":"Nutcracker Rehearsal","step":"","detail":"12:45–5pm • Hair & makeup done, in costume!","links":""},{"row":17,"done":false,"date":"2026-11-15T00:00:00.000Z","day":"Sun 15","section":"Homework","priority":"Major Summative","subject":"History • Laabs","title":"Start History Review","step":"Review a little tonight, then a bit each night","detail":"BIG test is Wed — start today!","links":"Unit 5 Newsletter: https://app.smore.com/n/j7z6g | History Class Website: https://sites.google.com/lcps.org/wms6thgradeushistory/home"},{"row":18,"done":false,"date":"2026-11-15T00:00:00.000Z","day":"Sun 15","section":"Homework","priority":"Major Summative","subject":"Science • Redcay","title":"Start Astronomy Workbook","step":"Workbook pages 43–52 — do a few pages today","detail":"BIG test is Thu — start today!","links":"Astronomy Study Guide: https://docs.google.com/presentation/d/1JcQ3FZYs3oZ_iFq4CABI2lYwrRxGg-d1v_JyVJqyyII/edit?usp=sharing"},{"row":19,"done":false,"date":"2026-11-15T00:00:00.000Z","day":"Sun 15","section":"Fun & extra","priority":"","subject":"Dance","title":"Pick Spirit Wear Size","step":"Pick your size with a grown-up today","detail":"Orders end Mon — pick today!","links":""},{"row":20,"done":false,"date":"2026-11-16T00:00:00.000Z","day":"Mon 16","section":"Homework","priority":"Summative","subject":"Math • Dimasi","title":"Math Integers Test","step":"","detail":"Adding & subtracting integers","links":"Math Unit Agenda: https://docs.google.com/document/d/125BgiK52EV0vsolGjTtZiBI8fWbvexe3uAmgBjSH4P4/edit?usp=sharing"},{"row":21,"done":false,"date":"2026-11-16T00:00:00.000Z","day":"Mon 16","section":"Fun & extra","priority":"","subject":"Dance","title":"Spirit Wear Last Day","step":"","detail":"Nutcracker orders end today","links":""},{"row":22,"done":false,"date":"2026-11-17T00:00:00.000Z","day":"Tue 17","section":"Fun & extra","priority":"","subject":"Dance","title":"Remind a Grown-Up: Bouquets!","step":"Remind a grown-up to order them today","detail":"Bouquet orders are due Thu","links":""},{"row":23,"done":false,"date":"2026-11-18T00:00:00.000Z","day":"Wed 18","section":"Homework","priority":"Major Summative","subject":"History • Laabs","title":"History BIG Test","step":"","detail":"Unit 5 Major Summative — you got this!","links":"Unit 5 Newsletter: https://app.smore.com/n/j7z6g | History Class Website: https://sites.google.com/lcps.org/wms6thgradeushistory/home"},{"row":24,"done":false,"date":"2026-11-18T00:00:00.000Z","day":"Wed 18","section":"Fun & extra","priority":"","subject":"After School","title":"Doctor at 2:45pm","step":"Morning: backpack packed & ready to go","detail":"Dermatology appointment","links":""},{"row":25,"done":false,"date":"2026-11-19T00:00:00.000Z","day":"Thu 19","section":"Homework","priority":"Major Summative","subject":"Science • Redcay","title":"Astronomy BIG Test","step":"","detail":"Moon, tides, seasons & eclipses","links":"Astronomy Study Guide: https://docs.google.com/presentation/d/1JcQ3FZYs3oZ_iFq4CABI2lYwrRxGg-d1v_JyVJqyyII/edit?usp=sharing"},{"row":26,"done":false,"date":"2026-11-19T00:00:00.000Z","day":"Thu 19","section":"Fun & extra","priority":"","subject":"Dance","title":"Bouquets Due","step":"","detail":"Nutcracker flowers — last day!","links":""}];
+
+      var COLORS = {
+        coral:  { bg: "#FFF0F0", border: "#FF6B6B", chip: "#C92A2A", text: "#8B1E1E" },
+        teal:   { bg: "#E6FAF7", border: "#00B8A9", chip: "#00796B", text: "#065F56" },
+        yellow: { bg: "#FFF8D6", border: "#FFC93C", chip: "#B45309", text: "#6B4E00" },
+        violet: { bg: "#EFEAFF", border: "#7C5CFF", chip: "#6D28D9", text: "#3B2A7A" },
+        pink:   { bg: "#FFEAF3", border: "#FF8FAB", chip: "#BE185D", text: "#7A1E3F" },
+        sky:    { bg: "#E6F6FF", border: "#4CC9F0", chip: "#0369A1", text: "#0B4A66" }
+      };
+
+      function rankOf(priority) {
+        if (priority === "Urgent") return -1;
+        if (priority === "Major Summative") return 0;
+        if (priority === "Minor Summative" || priority === "Summative") return 1;
+        if (priority === "Formative") return 2;
+        return 3;
+      }
+      var TAGS = {
+        "Math Test Day": "TEST", "Math Integers Test": "TEST",
+        "History BIG Test": "BIG TEST", "Astronomy BIG Test": "BIG TEST",
+        "Astronomy Quiz #3 — DUE Fri": "QUIZ",
+        "History IRW Due": "DUE", "Spirit Wear Last Day": "DUE", "Bouquets Due": "DUE",
+        "Sneakers by the Door": "GET READY", "Pick a Bright Outfit": "GET READY",
+        "Get Ready for Nutcracker": "GET READY", "Pick Spirit Wear Size": "GET READY",
+        "Decide: All-County?": "DECIDE TODAY", "All-County Sign-Up?": "YOUR CHOICE",
+        "Handball Starts!": "FUN", "Neonverse Party!": "PARTY",
+        "Nutcracker Rehearsal": "BIG DAY", "Remind a Grown-Up: Bouquets!": "REMIND"
+      };
+      function styleFor(t) {
+        var title = t.title, subj = t.subject || "";
+        if (title.indexOf("Start ") === 0) return styleForTitle(title.slice(6), subj, true);
+        return styleForTitle(title, subj, false);
+      }
+      function styleForTitle(title, subj, isStart) {
+        if (title.indexOf("Math") === 0) return { emoji: title.indexOf("Integers") >= 0 ? "➕" : "🔢", color: "teal" };
+        if (title.indexOf("Astronomy Workbook") >= 0 || title.indexOf("Astronomy BIG") >= 0) return { emoji: "🌙", color: "coral" };
+        if (title.indexOf("Astronomy") >= 0) return { emoji: "🪐", color: "coral" };
+        if (title.indexOf("Book Club") >= 0) return { emoji: "📖", color: "yellow" };
+        if (title.indexOf("History BIG") >= 0 || title.indexOf("History Review") >= 0) return { emoji: "🏆", color: "violet" };
+        if (title.indexOf("History") >= 0) return { emoji: "🏛️", color: "violet" };
+        if (title.indexOf("Cello") >= 0) return { emoji: "🎵", color: "pink" };
+        if (title.indexOf("Sneakers") >= 0 || title.indexOf("Handball") >= 0) return { emoji: "🤾", color: "sky" };
+        if (title.indexOf("All-County") >= 0) return { emoji: "🎵", color: "pink" };
+        if (title.indexOf("Bright Outfit") >= 0 || title.indexOf("Neonverse") >= 0) return { emoji: "🌟", color: "violet" };
+        if (title.indexOf("Nutcracker") >= 0) return { emoji: "🩰", color: "pink" };
+        if (title.indexOf("Spirit Wear") >= 0) return { emoji: "👕", color: "sky" };
+        if (title.indexOf("Bouquets") >= 0) return { emoji: "💐", color: "pink" };
+        if (title.indexOf("Doctor") >= 0) return { emoji: "🩺", color: "sky" };
+        if (subj.indexOf("Math") === 0) return { emoji: "🔢", color: "teal" };
+        if (subj.indexOf("Science") === 0) return { emoji: "🪐", color: "coral" };
+        if (subj.indexOf("English") === 0) return { emoji: "📖", color: "yellow" };
+        if (subj.indexOf("History") === 0) return { emoji: "🏛️", color: "violet" };
+        if (subj.indexOf("Dance") === 0) return { emoji: "🩰", color: "pink" };
+        return { emoji: isStart ? "🚀" : "⭐", color: "teal" };
+      }
+      function parseLinks(raw) {
+        if (!raw) return [];
+        return raw.split(" | ").map(function (part) {
+          var m = part.match(/^(.+?):\s*(https?:\/\/\S+)$/);
+          if (!m) return null;
+          var label = m[1].trim();
+          var pretty = label;
+          if (label === "Astronomy Study Guide") pretty = "📚 Astronomy Study Guide";
+          else if (label === "Review Games") pretty = "🎮 Astronomy Review Games";
+          else if (label.indexOf("Flashcards") === 0) pretty = "🃏 " + label;
+          else if (label === "Math Unit Agenda") pretty = "📐 Math Unit Agenda";
+          else if (label === "Unit 5 Newsletter") pretty = "📰 Unit 5 Newsletter";
+          else if (label === "History Class Website") pretty = "🏛️ History Class Website";
+          return { label: pretty, rawLabel: label, url: m[2] };
+        }).filter(Boolean);
+      }
+      function dateKeyOf(t) { return (t.date || "").slice(0, 10); }
+      function weekdayOf(key) {
+        var d = new Date(key + "T12:00:00");
+        return isNaN(d.getTime()) ? "" : d.toLocaleDateString("en-US", { weekday: "long" });
+      }
+      function todayKey() {
+        var n = new Date();
+        var m = String(n.getMonth() + 1); if (m.length < 2) m = "0" + m;
+        var d = String(n.getDate()); if (d.length < 2) d = "0" + d;
+        return n.getFullYear() + "-" + m + "-" + d;
+      }
+      function esc(s) {
+        return String(s == null ? "" : s).replace(/[&<>"']/g, function (c) {
+          return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c];
+        });
+      }
+
+      var tasks = FALLBACK_TASKS.slice();
+      var selectedDay = null;
+      var live = false;
+      var savingRows = {};
+      var serverTotalCelloMinutes = null;
+      var archiveEntries = [];
+      var pastWeeksOpen = false;
+      var celebrationShown = false; // once per visit only — in-memory, never stored
+      var dayCelebrationShown = {}; // day key -> true, once per visit per day — in-memory only
+      var dayCelebrationRunning = false;
+
+      // After a celebration burst starts in the viewport, gently scroll to
+      // the top so Eva also sees the rainbow gauge fill up and the
+      // "Day done!" / "Week complete!" badge up there. The burst overlay is
+      // position: fixed, so it stays on screen while the page scrolls.
+      function scrollToTopGently() {
+        var reduce = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+        try {
+          window.scrollTo({ top: 0, behavior: reduce ? "auto" : "smooth" });
+        } catch (e) { window.scrollTo(0, 0); }
+      }
+
+      // ---- Week-complete celebration (lightweight canvas + CSS, no libraries, no sound) ----
+      // Rendered as a fixed overlay covering the visible screen, so it
+      // explodes right where Eva is, the instant the last box is tapped.
+      function startCelebration() {
+        var overlay = document.getElementById("celebration");
+        var canvas = document.getElementById("celebration-canvas");
+        var floaties = document.getElementById("celebration-floaties");
+        if (!overlay || !canvas) return;
+        // Reduced motion: no particle show — the "🎉 Week complete!" badge
+        // by the gauge (set in render) and the floating week pill are the
+        // celebration; still bring the gauge into view.
+        if (window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches) { scrollToTopGently(); return; }
+        overlay.hidden = false;
+        overlay.classList.remove("fading");
+        overlay.setAttribute("aria-hidden", "false");
+        // Burst first, then a gentle scroll to the top to see the gauge.
+        setTimeout(scrollToTopGently, 250);
+
+        // Floating stars and balloons (CSS animation, JS only places them).
+        // The week-complete show is the biggest moment of the week, so it
+        // fills the whole screen: extra balloons and stars on top of the
+        // heavier confetti, fireworks and glitter below.
+        if (floaties) {
+          var floatChars = ["🎈", "⭐", "🌟", "🎈", "⭐", "🎈", "🌟", "⭐", "🎈", "🌟", "⭐", "🎈", "🎈", "🌟", "⭐", "🎈", "🌟", "🎈", "⭐", "🌟", "🎈", "⭐", "🎈", "🌟"];
+          floaties.innerHTML = floatChars.map(function (ch, i) {
+            var left = 3 + Math.random() * 92;
+            var size = 26 + Math.round(Math.random() * 26);
+            var dur = (4.5 + Math.random() * 2.5).toFixed(2);
+            var delay = (Math.random() * 1.8).toFixed(2);
+            return '<span class="celebration-floaty" style="left:' + left + '%;font-size:' + size + 'px;animation-duration:' + dur + 's;animation-delay:' + delay + 's;">' + ch + '</span>';
+          }).join("");
+        }
+
+        var ctx = canvas.getContext("2d");
+        if (!ctx) { setTimeout(function () { overlay.hidden = true; }, 3000); return; }
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+        var W = canvas.width, H = canvas.height;
+        var COLORS = ["#FF6B6B", "#FFC93C", "#00B8A9", "#4CC9F0", "#7C5CFF", "#FF8FAB", "#34C759"];
+        var parts = [];
+        function spawnConfetti(n) {
+          for (var i = 0; i < n; i++) {
+            parts.push({
+              kind: Math.random() < 0.18 ? "star" : "confetti",
+              x: Math.random() * W, y: -20 - Math.random() * H * 0.35,
+              vx: -0.6 + Math.random() * 1.2, vy: 2 + Math.random() * 3,
+              size: 5 + Math.random() * 7, rot: Math.random() * Math.PI * 2,
+              vr: -0.12 + Math.random() * 0.24, color: COLORS[Math.floor(Math.random() * COLORS.length)],
+              sway: Math.random() * Math.PI * 2
+            });
+          }
+        }
+        function spawnFirework() {
+          var cx = W * 0.12 + Math.random() * W * 0.76;
+          var cy = H * 0.12 + Math.random() * H * 0.38;
+          var color = COLORS[Math.floor(Math.random() * COLORS.length)];
+          for (var i = 0; i < 74; i++) {
+            var a = (i / 74) * Math.PI * 2 + Math.random() * 0.15;
+            var sp = 2 + Math.random() * 4.2;
+            parts.push({ kind: "spark", x: cx, y: cy, vx: Math.cos(a) * sp, vy: Math.sin(a) * sp, size: 2 + Math.random() * 2.5, rot: 0, vr: 0, color: color, life: 1 });
+          }
+        }
+        function spawnGlitter(n) {
+          for (var i = 0; i < n; i++) {
+            parts.push({ kind: "glitter", x: Math.random() * W, y: Math.random() * H * 0.8, vx: 0, vy: 0.15, size: 1.5 + Math.random() * 2.5, rot: Math.random() * Math.PI, vr: 0, color: "#FFD93D", life: 0.4 + Math.random() * 0.6 });
+          }
+        }
+        function drawStar(x, y, r, color) {
+          ctx.save(); ctx.translate(x, y); ctx.fillStyle = color; ctx.beginPath();
+          for (var i = 0; i < 10; i++) {
+            var rad = i % 2 === 0 ? r : r * 0.45;
+            var a = (i / 10) * Math.PI * 2 - Math.PI / 2;
+            if (i === 0) ctx.moveTo(Math.cos(a) * rad, Math.sin(a) * rad); else ctx.lineTo(Math.cos(a) * rad, Math.sin(a) * rad);
+          }
+          ctx.closePath(); ctx.fill(); ctx.restore();
+        }
+        var start = Date.now();
+        var lastBurst = 0, lastGlitter = 0;
+        spawnConfetti(170);
+        spawnGlitter(30);
+        spawnFirework();
+        spawnFirework();
+        function frame() {
+          var elapsed = Date.now() - start;
+          ctx.clearRect(0, 0, W, H);
+          if (elapsed < 3400 && parts.length < 820) spawnConfetti(5);
+          if (elapsed < 4300 && elapsed - lastBurst > 380) { spawnFirework(); if (Math.random() < 0.45) spawnFirework(); lastBurst = elapsed; }
+          if (elapsed < 5000 && elapsed - lastGlitter > 170) { spawnGlitter(12); lastGlitter = elapsed; }
+          parts = parts.filter(function (p) { return p.y < H + 30 && (p.kind !== "spark" || p.life > 0) && (p.kind !== "glitter" || p.life > 0); });
+          parts.forEach(function (p) {
+            if (p.kind === "confetti" || p.kind === "star") {
+              p.sway += 0.06; p.x += p.vx + Math.sin(p.sway) * 0.7; p.y += p.vy; p.rot += p.vr;
+              ctx.save(); ctx.translate(p.x, p.y); ctx.rotate(p.rot); ctx.fillStyle = p.color;
+              if (p.kind === "star") { ctx.restore(); drawStar(p.x, p.y, p.size, p.color); }
+              else { ctx.fillRect(-p.size / 2, -p.size / 4, p.size, p.size / 2); ctx.restore(); }
+            } else if (p.kind === "spark") {
+              p.x += p.vx; p.y += p.vy; p.vy += 0.045; p.vx *= 0.985; p.vy *= 0.985; p.life -= 0.014;
+              ctx.globalAlpha = Math.max(p.life, 0); ctx.fillStyle = p.color;
+              ctx.beginPath(); ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2); ctx.fill(); ctx.globalAlpha = 1;
+            } else { // glitter — twinkling sparkles that drift down slowly
+              p.y += p.vy; p.life -= 0.008; p.rot += 0.05;
+              ctx.save(); ctx.translate(p.x, p.y); ctx.rotate(p.rot);
+              ctx.globalAlpha = Math.max(Math.min(p.life, 1), 0); ctx.fillStyle = p.color;
+              ctx.fillRect(-p.size * 1.8, -0.8, p.size * 3.6, 1.6); ctx.fillRect(-0.8, -p.size * 1.8, 1.6, p.size * 3.6);
+              ctx.restore(); ctx.globalAlpha = 1;
+            }
+          });
+          if (elapsed < 6200) { requestAnimationFrame(frame); }
+          else {
+            ctx.clearRect(0, 0, W, H);
+            overlay.classList.add("fading");
+            setTimeout(function () {
+              overlay.hidden = true; overlay.classList.remove("fading");
+              overlay.setAttribute("aria-hidden", "true");
+              if (floaties) floaties.innerHTML = "";
+            }, 850);
+          }
+        }
+        requestAnimationFrame(frame);
+      }
+
+      // ---- Small per-day celebration ----
+      // A day is complete when EVERY task dated that day is checked off —
+      // homework and fun & extra alike. A cello card counts as done when it
+      // is checked off, even with 0 minutes logged: minutes only affect
+      // stars and the cello totals, never whether the day is done.
+      function taskDoneForDay(t) { return !!t.done; }
+      function isDayComplete(dayKey) {
+        if (!dayKey) return false;
+        var dayTasks = tasks.filter(function (t) { return dateKeyOf(t) === dayKey; });
+        return dayTasks.length > 0 && dayTasks.every(taskDoneForDay);
+      }
+      // Modest, ~2-second burst rendered as a fixed overlay covering the
+      // current viewport — centered on the screen Eva is looking at right
+      // now, wherever she has scrolled to — then the page scrolls gently
+      // to the top so she sees the gauge and badge too. A little confetti
+      // and glitter, a few stars floating up, and a "Day done! 🌟" pill.
+      // Pointer-events stay off, so nothing is ever blocked.
+      function startDayCelebration(dayKey) {
+        var overlay = document.getElementById("day-celebration");
+        var canvas = document.getElementById("day-celebration-canvas");
+        var floaties = document.getElementById("day-celebration-floaties");
+        if (!overlay || !canvas || dayCelebrationRunning) return;
+        dayCelebrationRunning = true;
+
+        // The overlay is position: fixed (inset: 0), so it covers exactly
+        // the visible screen — no page-coordinate positioning needed.
+        overlay.hidden = false;
+        overlay.classList.remove("fading");
+        overlay.setAttribute("aria-hidden", "false");
+        // Burst first, then a gentle scroll to the top to see the gauge.
+        setTimeout(scrollToTopGently, 250);
+
+        function hideDayCelebration() {
+          overlay.classList.add("fading");
+          setTimeout(function () {
+            overlay.hidden = true; overlay.classList.remove("fading");
+            overlay.setAttribute("aria-hidden", "true");
+            if (floaties) floaties.innerHTML = "";
+            dayCelebrationRunning = false;
+          }, 420);
+        }
+        // Reduced motion: just the cheerful pill for two seconds, no particles.
+        if (window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+          setTimeout(hideDayCelebration, 1600);
+          return;
+        }
+        // A few floating stars (CSS animation, JS only places them).
+        if (floaties) {
+          var floatChars = ["⭐", "🌟", "✨", "⭐", "🌟"];
+          floaties.innerHTML = floatChars.map(function (ch) {
+            var left = 12 + Math.random() * 72;
+            var size = 20 + Math.round(Math.random() * 12);
+            var dur = (1.4 + Math.random() * 0.5).toFixed(2);
+            var delay = (Math.random() * 0.35).toFixed(2);
+            return '<span class="day-celebration-floaty" style="left:' + left + '%;font-size:' + size + 'px;animation-duration:' + dur + 's;animation-delay:' + delay + 's;">' + ch + '</span>';
+          }).join("");
+        }
+        var ctx = canvas.getContext("2d");
+        if (!ctx) { setTimeout(hideDayCelebration, 1600); return; }
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+        var W = canvas.width, H = canvas.height;
+        var DCOLORS = ["#FF6B6B", "#FFC93C", "#00B8A9", "#4CC9F0", "#7C5CFF", "#FF8FAB"];
+        var parts = [];
+        // One cheerful burst out of the center of the screen…
+        var cx = W / 2, cy = H * 0.38;
+        for (var i = 0; i < 42; i++) {
+          var a = Math.random() * Math.PI * 2;
+          var sp = 1.2 + Math.random() * 3.4;
+          parts.push({
+            kind: Math.random() < 0.22 ? "star" : "confetti",
+            x: cx, y: cy, vx: Math.cos(a) * sp, vy: Math.sin(a) * sp - 1.2,
+            size: 4 + Math.random() * 6, rot: Math.random() * Math.PI * 2,
+            vr: -0.15 + Math.random() * 0.3, color: DCOLORS[Math.floor(Math.random() * DCOLORS.length)]
+          });
+        }
+        // …plus a sprinkle of twinkling glitter across the screen.
+        for (var j = 0; j < 22; j++) {
+          parts.push({ kind: "glitter", x: Math.random() * W, y: Math.random() * H * 0.85, vx: 0, vy: 0.12, size: 1.5 + Math.random() * 2.2, rot: Math.random() * Math.PI, vr: 0, color: "#FFD93D", life: 0.5 + Math.random() * 0.5 });
+        }
+        function drawDayStar(x, y, r, color) {
+          ctx.save(); ctx.translate(x, y); ctx.fillStyle = color; ctx.beginPath();
+          for (var k = 0; k < 10; k++) {
+            var rad = k % 2 === 0 ? r : r * 0.45;
+            var ang = (k / 10) * Math.PI * 2 - Math.PI / 2;
+            if (k === 0) ctx.moveTo(Math.cos(ang) * rad, Math.sin(ang) * rad); else ctx.lineTo(Math.cos(ang) * rad, Math.sin(ang) * rad);
+          }
+          ctx.closePath(); ctx.fill(); ctx.restore();
+        }
+        var start = Date.now();
+        function frame() {
+          var elapsed = Date.now() - start;
+          ctx.clearRect(0, 0, W, H);
+          parts = parts.filter(function (p) { return p.y < H + 24 && (p.kind !== "glitter" || p.life > 0); });
+          parts.forEach(function (p) {
+            if (p.kind === "glitter") {
+              p.y += p.vy; p.life -= 0.012; p.rot += 0.05;
+              ctx.save(); ctx.translate(p.x, p.y); ctx.rotate(p.rot);
+              ctx.globalAlpha = Math.max(Math.min(p.life, 1), 0); ctx.fillStyle = p.color;
+              ctx.fillRect(-p.size * 1.8, -0.8, p.size * 3.6, 1.6); ctx.fillRect(-0.8, -p.size * 1.8, 1.6, p.size * 3.6);
+              ctx.restore(); ctx.globalAlpha = 1;
+            } else {
+              p.x += p.vx; p.y += p.vy; p.vy += 0.055; p.vx *= 0.985; p.rot += p.vr;
+              if (p.kind === "star") { drawDayStar(p.x, p.y, p.size, p.color); }
+              else {
+                ctx.save(); ctx.translate(p.x, p.y); ctx.rotate(p.rot); ctx.fillStyle = p.color;
+                ctx.fillRect(-p.size / 2, -p.size / 4, p.size, p.size / 2); ctx.restore();
+              }
+            }
+          });
+          if (elapsed < 1550) { requestAnimationFrame(frame); }
+          else { ctx.clearRect(0, 0, W, H); hideDayCelebration(); }
+        }
+        requestAnimationFrame(frame);
+      }
+      // Decide, on every render, whether the day celebration should fire.
+      // The huge week celebration always wins: when the week is at 100%,
+      // every complete day is marked celebrated WITHOUT firing its small
+      // burst, so the two never show at once — and never one after the other.
+      function maybeCelebrateDay(weekComplete) {
+        if (weekComplete) {
+          daysList().forEach(function (d) { if (isDayComplete(d.key)) dayCelebrationShown[d.key] = true; });
+          return;
+        }
+        if (dayCelebrationRunning) return; // one small burst at a time — retry on the next render
+        if (selectedDay && isDayComplete(selectedDay) && !dayCelebrationShown[selectedDay]) {
+          dayCelebrationShown[selectedDay] = true;
+          startDayCelebration(selectedDay);
+        }
+      }
+
+      // Rainbow star — gradient fill with a dark outline so it pops on any background.
+      function rainbowStarSvg(size) {
+        size = size || 26;
+        return '<svg class="rainbow-star" width="' + size + '" height="' + size + '" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><polygon points="12,1.6 15.2,8.2 22.4,9.2 17.2,14.2 18.5,21.4 12,17.9 5.5,21.4 6.8,14.2 1.6,9.2 8.8,8.2" fill="url(#rainbow-star-grad)" stroke="#3B1470" stroke-width="1.6" stroke-linejoin="round" /></svg>';
+      }
+
+      function isCello(t) {
+        return ((t.title || "") + " " + (t.subject || "")).toLowerCase().indexOf("cello") >= 0;
+      }
+      function celloMinutesOf(t) {
+        var n = parseInt(t.minutes, 10);
+        return isNaN(n) || n < 0 ? 0 : n;
+      }
+      function formatMinutes(total) {
+        total = parseInt(total, 10) || 0;
+        if (total < 60) return total + " min";
+        var h = Math.floor(total / 60), m = total % 60;
+        return h + " hr" + (m ? " " + m + " min" : "") + " (" + total + " min)";
+      }
+      function computedCelloTotal() {
+        return tasks.filter(isCello).reduce(function (sum, t) { return sum + celloMinutesOf(t); }, 0);
+      }
+      function celloTotal() {
+        // Prefer the bridge total when we have it; it matches the Sheet's Cello Practice tab.
+        if (typeof serverTotalCelloMinutes === "number" && !isNaN(serverTotalCelloMinutes)) return serverTotalCelloMinutes;
+        return computedCelloTotal();
+      }
+      // Cello credit is banked from total minutes: every full 15 minutes = 1 cello
+      // day, capped at 7 per week. Extra minutes on one day cover a missed day.
+      function bankedCelloDays() {
+        var d = Math.floor((celloTotal() || 0) / 15);
+        if (d < 0) d = 0;
+        if (d > 7) d = 7;
+        return d;
+      }
+      // Stars: 1 per finished task — except Urgent (late) work, which earns 0 even
+      // when checked off, and cello, which earns banked days instead of 1 per card.
+      // A cello card ticked with 0 minutes earns nothing (it adds no minutes).
+      function starTotal() {
+        var regular = tasks.filter(function (t) {
+          return t.done && !isCello(t) && t.priority !== "Urgent";
+        }).length;
+        return regular + bankedCelloDays();
+      }
+
+      function daysList() {
+        var seen = {}, out = [];
+        tasks.forEach(function (t) {
+          var k = dateKeyOf(t);
+          if (!seen[k]) { seen[k] = true; out.push({ key: k, label: t.day || k, weekday: weekdayOf(k) }); }
+        });
+        out.sort(function (a, b) { return a.key < b.key ? -1 : 1; });
+        return out;
+      }
+      function homework() { return tasks.filter(function (t) { return t.section !== "Fun & extra"; }); }
+
+      function setSync(msg) { document.getElementById("sync-status").textContent = msg; }
+      function showToast(msg) {
+        var el = document.getElementById("toast");
+        if (!msg) { el.style.display = "none"; el.textContent = ""; return; }
+        el.style.display = "block"; el.textContent = msg;
+      }
+
+      function render() {
+        var days = daysList();
+        if (!selectedDay || !days.some(function (d) { return d.key === selectedDay; })) {
+          var tk = todayKey();
+          var withHw = days.filter(function (d) {
+            return homework().some(function (t) { return dateKeyOf(t) === d.key && !t.done; });
+          });
+          selectedDay = days.some(function (d) { return d.key === tk; }) ? tk : (withHw.length ? withHw[0].key : (days[0] && days[0].key));
+        }
+        var hw = homework();
+        var totalStars = starTotal();
+        document.getElementById("stars").innerHTML = rainbowStarSvg(28) + "<span>" + totalStars + (totalStars === 1 ? " star" : " stars") + "</span>";
+
+        var tk2 = todayKey();
+        // Rainbow progress: homework done, with cello counted as banked days
+        // (total minutes ÷ 15, capped at 7) instead of one per checked card.
+        var hwNonCello = hw.filter(function (t) { return !isCello(t); });
+        var hwCello = hw.filter(isCello);
+        var expectedCelloDays = Math.min(7, hwCello.length);
+        var hwDone = hwNonCello.filter(function (t) { return t.done; }).length + (hwCello.length ? Math.min(bankedCelloDays(), expectedCelloDays) : 0);
+        var hwTotal = hwNonCello.length + (hwCello.length ? expectedCelloDays : 0);
+        var pct = hwTotal ? Math.round(hwDone / hwTotal * 100) : 0;
+        if (pct > 100) pct = 100;
+        var todayHw = hw.filter(function (t) { return dateKeyOf(t) === tk2; });
+        var todayDone = todayHw.filter(function (t) { return !!t.done; }).length;
+        var label;
+        if (selectedDay === tk2 && todayHw.length) {
+          label = todayDone === todayHw.length ? "🎉 TODAY'S HOMEWORK = DONE! Amazing!" : "Today's homework: " + todayDone + " of " + todayHw.length + " done";
+        } else {
+          label = "Homework all week: " + hwDone + " of " + hwTotal + " done";
+        }
+        document.getElementById("progress-label").textContent = label;
+        document.getElementById("progress-pct").textContent = pct + "%";
+        document.getElementById("progress-fill").style.width = pct + "%";
+        document.getElementById("progress-bar").setAttribute("aria-valuenow", String(pct));
+
+        // Week complete: keep the badge by the gauge for as long as the week
+        // stays at 100%, and fire the big celebration only once per visit —
+        // either when the last check hits 100% or when the page opens with
+        // the week already complete.
+        var completeBadge = document.getElementById("week-complete-badge");
+        if (completeBadge) completeBadge.hidden = !(pct === 100 && hwTotal > 0);
+        // Floating pills, fixed to the bottom corner of the screen: once a
+        // day is complete its "Day done! 🌟" pill stays visible wherever
+        // Eva is scrolled, and the "🎉 Week complete!" pill does the same
+        // for the week — so neither can be missed by scrolling past it.
+        var weekPill = document.getElementById("week-done-pill");
+        if (weekPill) weekPill.hidden = !(pct === 100 && hwTotal > 0);
+        var dayPill = document.getElementById("day-done-pill");
+        if (dayPill) dayPill.hidden = !days.some(function (d) { return isDayComplete(d.key); });
+        if (pct === 100 && hwTotal > 0 && !celebrationShown) {
+          celebrationShown = true;
+          startCelebration();
+        }
+
+        // Cello weekly total
+        var cTotal = celloTotal();
+        var celloTasks = tasks.filter(isCello);
+        var daysPracticed = celloTasks.filter(function (t) { return celloMinutesOf(t) > 0; }).length;
+        var bankedDays = bankedCelloDays();
+        var badgeEl = document.getElementById("cello-total-badge");
+        var totalEl = document.getElementById("cello-total-text");
+        var daysEl = document.getElementById("cello-days-text");
+        if (badgeEl) badgeEl.innerHTML = esc(formatMinutes(cTotal)) + '<br /><span style="font-size:13px;font-weight:700;">this week</span>';
+        if (totalEl) totalEl.textContent = cTotal > 0 ? "You practiced " + formatMinutes(cTotal) + " this week — great playing! 🎶" : "Tap the minutes on today's cello card after you practice!";
+        if (daysEl) daysEl.textContent = celloTasks.length ? ("Cello days earned: " + bankedDays + " of 7 — every 15 minutes counts as a day, and extra minutes carry over to a day you missed! Practiced on " + daysPracticed + " of " + celloTasks.length + (celloTasks.length === 1 ? " day" : " days") + " so far.") : "";
+
+        // Day picker
+        var nav = document.getElementById("day-nav");
+        nav.innerHTML = days.map(function (d) {
+          var left = hw.filter(function (t) { return dateKeyOf(t) === d.key && !t.done; }).length;
+          var isToday = d.key === tk2;
+          return '<button type="button" data-day="' + esc(d.key) + '" class="' + (d.key === selectedDay ? "active" : "") + '" aria-label="Show ' + esc(d.weekday) + ' ' + esc(d.label) + (isToday ? ", today" : "") + '">' +
+            esc(d.label) + (isToday ? " • Today" : "") + (left === 0 ? " ✓" : "") + '</button>';
+        }).join("");
+        Array.prototype.forEach.call(nav.querySelectorAll("[data-day]"), function (btn) {
+          btn.addEventListener("click", function () { selectedDay = btn.getAttribute("data-day"); render(); });
+        });
+
+        // Cards
+        function byPriority(a, b) { return rankOf(a.priority) - rankOf(b.priority) || a.row - b.row; }
+        var dayHw = tasks.filter(function (t) { return dateKeyOf(t) === selectedDay && t.section !== "Fun & extra"; }).sort(byPriority);
+        var dayEx = tasks.filter(function (t) { return dateKeyOf(t) === selectedDay && t.section === "Fun & extra"; }).sort(function (a, b) { return a.row - b.row; });
+
+        document.getElementById("homework-list").innerHTML = dayHw.length
+          ? '<div class="cards-grid">' + dayHw.map(function (t) { return cardHtml(t, false); }).join("") + '</div>'
+          : '<p class="empty-note">No homework this day! 🎉</p>';
+
+        var exWrap = document.getElementById("extras-wrap");
+        if (dayEx.length) {
+          exWrap.style.display = "block";
+          document.getElementById("extras-list").innerHTML = dayEx.map(function (t) { return cardHtml(t, true); }).join("");
+        } else { exWrap.style.display = "none"; document.getElementById("extras-list").innerHTML = ""; }
+
+        Array.prototype.forEach.call(document.querySelectorAll("[data-toggle]"), function (btn) {
+          btn.addEventListener("click", function () { toggleTask(parseInt(btn.getAttribute("data-toggle"), 10)); });
+        });
+        Array.prototype.forEach.call(document.querySelectorAll("[data-cello-min]"), function (btn) {
+          btn.addEventListener("click", function () {
+            setCelloMinutes(parseInt(btn.getAttribute("data-cello-row"), 10), parseInt(btn.getAttribute("data-cello-min"), 10));
+          });
+        });
+
+        // Small per-day celebration, checked last so its burst is laid out
+        // over the freshly rendered cards. If the week just hit 100%, the
+        // huge celebration above already fired and the small one is
+        // suppressed for every complete day (see maybeCelebrateDay).
+        maybeCelebrateDay(pct === 100 && hwTotal > 0);
+
+        renderPastWeeks();
+      }
+
+      // ---- Past weeks (Archive) — colorful cards, never a spreadsheet ----
+      function archiveWeekStars(entries) {
+        // If even not-done rows carry the same positive star value, the bridge
+        // stored the week's total on every row — use it as-is.
+        var notDoneVals = entries.filter(function (e) { return !e.done; }).map(function (e) { return parseFloat(e.stars) || 0; }).filter(function (v) { return v > 0; });
+        if (notDoneVals.length) return Math.max.apply(null, notDoneVals);
+        // Otherwise work it out with this week's rules: Urgent earns 0, and
+        // cello earns banked days from its total minutes (15 min = 1 day, max 7).
+        var base = entries.filter(function (e) { return e.done && e.priority !== "Urgent" && !isCello(e); }).length;
+        var celloMin = entries.filter(isCello).reduce(function (s, e) { return s + (parseInt(e.minutes, 10) || 0); }, 0);
+        var banked = Math.floor(celloMin / 15); if (banked > 7) banked = 7; if (banked < 0) banked = 0;
+        return base + banked;
+      }
+      function archiveCardHtml(e) {
+        var st = styleFor(e);
+        var c = COLORS[st.color] || COLORS.teal;
+        var mins = parseInt(e.minutes, 10) || 0;
+        var cello = isCello(e);
+        var emojiHtml = st.emoji === "⭐"
+          ? '<span class="emoji" aria-hidden="true" style="display:inline-flex;">' + rainbowStarSvg(46) + '</span>'
+          : '<span class="emoji" aria-hidden="true">' + st.emoji + '</span>';
+        return '<article class="card' + (e.done ? " done" : "") + '" style="background:' + c.bg + ';border-color:' + c.border + ';">' +
+          emojiHtml +
+          '<div style="flex:1;min-width:0;">' +
+            '<div class="badges"><h3>' + esc(e.title) + '</h3>' +
+            (e.priority === "Urgent" ? '<span class="urgent-chip" aria-label="Urgent">🚨 URGENT</span>' : '') +
+            (e.day ? '<span class="day-chip">' + esc(e.day) + '</span>' : '') +
+            '</div>' +
+            (cello && mins > 0 ? '<p class="detail" style="color:' + c.text + ';">🎵 ' + mins + ' minutes practiced</p>' : '') +
+            '<p class="subject">' + esc(e.subject) + '</p>' +
+          '</div>' +
+          '<span class="checkcircle' + (e.done ? " done" : "") + '" style="border-color:' + c.text + ';color:' + c.text + ';" role="img" aria-label="' + (e.done ? "Done" : "Not done") + '">' + (e.done ? "✓" : "") + '</span>' +
+        '</article>';
+      }
+      function renderPastWeeks() {
+        var view = document.getElementById("past-weeks-view");
+        var btn = document.getElementById("past-weeks-btn");
+        var list = document.getElementById("past-weeks-list");
+        if (!view || !list) return;
+        view.hidden = !pastWeeksOpen;
+        if (btn) btn.setAttribute("aria-expanded", pastWeeksOpen ? "true" : "false");
+        if (!pastWeeksOpen) return;
+        if (!archiveEntries.length) {
+          list.innerHTML = '<p class="empty-note">No past weeks yet! 🌈<br />When a week finishes, it will show up here so you can look back at everything you did.</p>';
+          return;
+        }
+        // Group by week label, keeping the bridge's order, newest week first.
+        var order = [], groups = {};
+        archiveEntries.forEach(function (e) {
+          var w = e.week || "Past week";
+          if (!groups[w]) { groups[w] = []; order.push(w); }
+          groups[w].push(e);
+        });
+        order.reverse();
+        list.innerHTML = order.map(function (w) {
+          var entries = groups[w].slice();
+          entries.sort(function (a, b) {
+            var da = (a.date || "").slice(0, 10), db = (b.date || "").slice(0, 10);
+            return da < db ? -1 : da > db ? 1 : 0;
+          });
+          var doneCount = entries.filter(function (e) { return e.done; }).length;
+          var stars = archiveWeekStars(entries);
+          var celloMin = entries.filter(isCello).reduce(function (s, e) { return s + (parseInt(e.minutes, 10) || 0); }, 0);
+          var hwEntries = entries.filter(function (e) { return e.section !== "Fun & extra"; });
+          var exEntries = entries.filter(function (e) { return e.section === "Fun & extra"; });
+          var html = '<article class="past-week">' +
+            '<div class="past-week-head"><h3>📚 ' + esc(w) + '</h3>' +
+            '<span class="stars-pill">' + rainbowStarSvg(24) + '<span>' + stars + (stars === 1 ? " star" : " stars") + '</span></span></div>' +
+            '<p class="past-week-meta">' + doneCount + " of " + entries.length + " done" + (celloMin > 0 ? " • 🎵 Cello: " + esc(formatMinutes(celloMin)) + " practiced" : "") + '</p>';
+          if (hwEntries.length) html += '<div class="cards-grid">' + hwEntries.map(archiveCardHtml).join("") + '</div>';
+          if (exEntries.length) html += '<p class="past-subhead">🎉 Fun &amp; extra stuff</p><div class="cards-grid">' + exEntries.map(archiveCardHtml).join("") + '</div>';
+          html += '</article>';
+          return html;
+        }).join("");
+      }
+
+      function celloBoxHtml(t) {
+        if (!isCello(t)) return "";
+        var mins = celloMinutesOf(t);
+        var opts = [15, 30, 45, 60];
+        var btns = opts.map(function (m) {
+          var active = mins === m;
+          return '<button type="button" class="cello-btn' + (active ? " active" : "") + (savingRows[t.row] ? " saving" : "") + '" data-cello-row="' + t.row + '" data-cello-min="' + m + '" aria-pressed="' + (active ? "true" : "false") + '" aria-label="I practiced ' + m + ' minutes on ' + esc(t.day || "this day") + '">' + m + ' min</button>';
+        }).join("");
+        var logged = "";
+        if (mins > 0) logged = '<p class="cello-logged">🎉 You logged ' + mins + ' min today! Tap a bigger number if you did more.</p>';
+        else if (t.done) logged = '<p class="cello-logged">✓ Done — tap how long you practiced!</p>';
+        return '<div class="cello-box"><p class="cello-box-label">🎵 How long did you practice? Tap one:</p>' +
+          '<div class="cello-btns">' + btns + '</div>' + logged + '</div>';
+      }
+      function cardHtml(t, extra) {
+        var st = styleFor(t);
+        var c = COLORS[st.color] || COLORS.teal;
+        var tag = TAGS[t.title] || (t.title.indexOf("Start ") === 0 ? "START" : "");
+        var detail = t.detail || "";
+        var startChip = "";
+        if (/^Start \S+$/.test(detail)) { startChip = detail; detail = ""; }
+        var links = parseLinks(t.links);
+        var cello = isCello(t);
+        var emojiHtml = st.emoji === "⭐"
+          ? '<span class="emoji" aria-hidden="true" style="display:inline-flex;">' + rainbowStarSvg(48) + '</span>'
+          : '<span class="emoji" aria-hidden="true">' + st.emoji + '</span>';
+        var html = '<article class="card' + (t.done ? " done" : "") + '" style="background:' + c.bg + ';border-color:' + c.border + ';' + (cello ? "align-items:flex-start;" : "") + '">' +
+          emojiHtml +
+          '<div style="flex:1;min-width:0;">' +
+            '<div class="badges"><h3>' + esc(t.title) + '</h3>' +
+            (t.priority === "Urgent" ? '<span class="urgent-chip" aria-label="Urgent">🚨 URGENT</span>' : '') +
+            (tag ? '<span class="tag-chip" style="background:' + c.chip + ';">' + esc(tag) + '</span>' : '') +
+            (startChip && !t.done ? '<span class="start-chip">🗓️ ' + esc(startChip) + '</span>' : '') +
+            '</div>' +
+            (detail ? '<p class="detail" style="color:' + c.text + ';">' + esc(detail) + '</p>' : '') +
+            (t.step ? '<p class="step">👉 First step: ' + esc(t.step) + '</p>' : '') +
+            (links.length ? '<p class="tap-label">Tap to open 👇</p><div class="linkpills">' + links.map(function (l) {
+              return '<a href="' + esc(l.url) + '" target="_blank" rel="noreferrer" aria-label="Open ' + esc(l.rawLabel) + ' for ' + esc(t.title) + '">' + esc(l.label) + '</a>';
+            }).join("") + '</div>' : '') +
+            celloBoxHtml(t) +
+            '<p class="subject">' + esc(t.subject) + '</p>' +
+          '</div>' +
+          '<button type="button" class="checkbtn' + (t.done ? " done" : "") + (savingRows[t.row] ? " saving" : "") + '" data-toggle="' + t.row + '" aria-pressed="' + (t.done ? "true" : "false") + '" aria-label="' + (t.done ? "Uncheck " : "Check off ") + esc(t.title) + '" style="border:3px solid ' + c.text + ';color:' + c.text + ';">' + (t.done ? "✓" : "") + '</button>' +
+        '</article>';
+        return html;
+      }
+
+      function setCelloMinutes(row, minutes) {
+        var t = tasks.filter(function (x) { return x.row === row; })[0];
+        if (!t || savingRows[row]) return;
+        minutes = parseInt(minutes, 10) || 0;
+        var prevMinutes = celloMinutesOf(t);
+        var prevDone = !!t.done;
+        var prevTotal = (typeof serverTotalCelloMinutes === "number") ? serverTotalCelloMinutes : null;
+        // Optimistic: set the day's minutes; any minutes > 0 means done (bridge does the same).
+        t.minutes = minutes;
+        t.done = minutes > 0;
+        if (prevTotal !== null) serverTotalCelloMinutes = prevTotal - prevMinutes + minutes;
+        savingRows[row] = true;
+        render();
+        setSync("☁️ Saving your cello practice…");
+        fetch(BRIDGE_URL, {
+          method: "POST",
+          headers: { "Content-Type": "text/plain;charset=utf-8" },
+          body: JSON.stringify({ row: row, minutes: minutes })
+        }).then(function (r) { return r.json(); }).then(function (res) {
+          delete savingRows[row];
+          if (!res || res.ok !== true) throw new Error("save failed");
+          if (typeof res.totalCelloMinutes === "number") serverTotalCelloMinutes = res.totalCelloMinutes;
+          if (res.task && typeof res.task.minutes === "number") t.minutes = res.task.minutes;
+          live = true;
+          setSync("☁️ Synced with the shared Sheet ✓");
+          showToast("");
+          render();
+        }).catch(function () {
+          delete savingRows[row];
+          t.minutes = prevMinutes;
+          t.done = prevDone;
+          serverTotalCelloMinutes = prevTotal;
+          setSync("⚠️ Couldn't save — check your internet and try again");
+          showToast("That cello practice didn't save to the Sheet, so I put it back. Tap the minutes again when you're back online.");
+          render();
+        });
+      }
+
+      function toggleTask(row) {
+        var t = tasks.filter(function (x) { return x.row === row; })[0];
+        if (!t || savingRows[row]) return;
+        // Unchecking a cello card clears its minutes too, so the weekly total stays right.
+        if (isCello(t) && t.done && celloMinutesOf(t) > 0) { setCelloMinutes(row, 0); return; }
+        var next = !t.done;
+        t.done = next; // optimistic — feels instant for Eva
+        savingRows[row] = true;
+        render();
+        setSync("☁️ Saving to the shared Sheet…");
+        fetch(BRIDGE_URL, {
+          method: "POST",
+          headers: { "Content-Type": "text/plain;charset=utf-8" },
+          body: JSON.stringify({ row: row, done: next })
+        }).then(function (r) { return r.json(); }).then(function (res) {
+          delete savingRows[row];
+          if (!res || res.ok !== true) throw new Error("save failed");
+          live = true;
+          setSync("☁️ Synced with the shared Sheet ✓");
+          showToast("");
+          render();
+        }).catch(function () {
+          delete savingRows[row];
+          t.done = !next; // put it back — the Sheet didn't save it
+          setSync("⚠️ Couldn't save — check your internet and try again");
+          showToast("That tick didn't save to the Sheet, so I put it back. Tap it again when you're back online.");
+          render();
+        });
+      }
+
+      function loadTasks(manual) {
+        if (manual) setSync("☁️ Refreshing from the shared Sheet…");
+        fetch(BRIDGE_URL + "?v=" + Date.now(), { method: "GET" })
+          .then(function (r) { return r.json(); })
+          .then(function (data) {
+            if (data && Array.isArray(data.archive)) archiveEntries = data.archive;
+            if (!data || !Array.isArray(data.tasks) || !data.tasks.length) throw new Error("empty");
+            if (typeof data.totalCelloMinutes === "number") serverTotalCelloMinutes = data.totalCelloMinutes;
+            // Keep optimistic state for any save still in flight
+            var pending = {};
+            tasks.forEach(function (t) { if (savingRows[t.row]) pending[t.row] = { done: t.done, minutes: t.minutes }; });
+            tasks = data.tasks.map(function (t) {
+              t.minutes = (t.minutes == null ? 0 : parseInt(t.minutes, 10) || 0);
+              if (Object.prototype.hasOwnProperty.call(pending, t.row)) { t.done = pending[t.row].done; t.minutes = pending[t.row].minutes; }
+              return t;
+            });
+            // If a save is in flight, keep the optimistic total rather than the server's older one.
+            if (Object.keys(pending).length) serverTotalCelloMinutes = computedCelloTotal();
+            live = true;
+            var n = new Date();
+            setSync("☁️ Synced with the shared Sheet • " + n.toLocaleTimeString("en-US", { hour: "numeric", minute: "2-digit" }));
+            showToast("");
+            render();
+          })
+          .catch(function () {
+            if (!live) setSync("⚠️ Couldn't reach the Sheet — showing the copy saved on Nov 12. Tap Refresh to try again.");
+            else setSync("⚠️ Refresh didn't go through — showing the last synced copy.");
+            render();
+          });
+      }
+
+      // Daily greeting + joke of the day, picked by the day of the week (getDay: 0 = Sunday).
+      var GREETINGS = [
+        "Aloha, Eva! 🌺",        // Sunday — Hawaiian
+        "¡Hola, Eva! ☀️",        // Monday — Spanish
+        "Bonjour, Eva! 🥐",      // Tuesday — French
+        "Hallo, Eva! 🥨",        // Wednesday — German
+        "Ciao, Eva! 🍕",         // Thursday — Italian
+        "Hi, Eva! 👋",           // Friday — English
+        "Olá, Eva! 🎉"           // Saturday — Portuguese
+      ];
+      // Joke of the day — aimed at ages 11–14: clever, a little sarcastic,
+      // school-and-everyday-life humor, with a mix of one-liners, short
+      // stories, and comedian-style bits. The setup/story shows at the top
+      // of the page and the punchline/payoff waits at the bottom.
+      // Picked fresh every day by date (no redeploy needed): Mondays get
+      // Monday jokes, Fridays get Friday jokes, weekends get weekend jokes,
+      // and every other day gets a joke for the current season / time of year.
+      // ============================================================
+      // JOKE POOL — 270 jokes from reputable published sources:
+      // Reader's Digest joke collections (212 Best Jokes for Kids,
+      // 122 School Jokes, Friday / Thanksgiving / Christmas /
+      // Spring / Summer / Winter lists), We Are Teachers Friday
+      // jokes, National Geographic Kids 'Just Joking' and
+      // Highlights joke books. Monday jokes on Mondays, Friday
+      // jokes on Fridays, weekend jokes Sat/Sun, and Tue/Wed/Thu
+      // get the season's pool (Fall in Nov, winter holidays in
+      // Dec, school jokes in Jan/Feb, spring + music + general in
+      // Mar–May, summer in June, back-to-school in Aug/Sep,
+      // Halloween in Oct). Weekend #10 uses the spare weekend
+      // joke so all 270 are unique, and one general joke (the
+      // golfer) sits in the weekend pool so its 66 days from
+      // Nov 12, 2026 through Jun 30, 2027 never repeat. Every
+      // pool is at least as big as the number of days it can be
+      // picked in that window — no repeats all school year.
+      // ============================================================
+      var MONDAY_JOKES = [
+        // Monday jokes
+        { setup: "Why did the teacher wear sunglasses on Monday?", punchline: "Because her students were so bright!" },
+        { setup: "Why was the math book sad on Monday?", punchline: "Because it had too many problems!" },
+        { setup: "Why did the kid bring a ladder to school on Monday?", punchline: "Because he wanted to go to high school!" },
+        { setup: "Why did the student eat his homework on Monday?", punchline: "Because the teacher said it was a piece of cake!" },
+        { setup: "Why did Monday feel so tired?", punchline: "Because it came right after the weekend." },
+        { setup: "Why did the cookie go to school on Monday?", punchline: "Because it wanted to be a smart cookie!" },
+        { setup: "Why did the kid throw a clock out the window on Monday?", punchline: "He wanted to see time fly!" },
+        { setup: "What did the computer say on Monday morning?", punchline: "\"I need a byte to wake up!\"" },
+        { setup: "Why was Monday so slow?", punchline: "It wanted everyone else to wake up first." },
+        { setup: "What's Monday's favourite drink?", punchline: "More coffee — for grown-ups; for us, more sleep." },
+        { setup: "Why did Monday bring a backpack?", punchline: "Because school was back." },
+        { setup: "Why does Monday feel harder than Friday?", punchline: "Because Friday has the weekend behind it, and Monday has it behind it too — in the past." },
+        { setup: "What did Monday say to the weekend?", punchline: "\"You left too soon — again.\"" },
+        { setup: "Why did the alarm clock hate Monday?", punchline: "Because it had to do all the waking up." },
+        { setup: "How do you know it's Monday?", punchline: "Your bed suddenly feels like the best place on Earth." },
+        { setup: "Why did the pencil dread Monday?", punchline: "It knew it was in for a long, drawn-out week." },
+        { setup: "Why did the student bring a pencil to bed on Sunday night?", punchline: "Because he wanted to draw his dreams before Monday erased them." },
+        { setup: "Knock, knock. Who's there? Monday. Monday who?", punchline: "Monday's here — hide the snooze button!" },
+        { setup: "What do you call a Monday that finally ends?", punchline: "A Tues-day in disguise — almost." },
+        { setup: "Why did the backpack groan on Monday?", punchline: "It was carrying the whole weekend's homework." },
+        { setup: "Why was the calendar grumpy on Monday?", punchline: "It had five long days to go." },
+        { setup: "What did the teacher say to the student who was late on Monday?", punchline: "\"You're going to have to brush up on your time management!\"" },
+        { setup: "Why don't scientists trust atoms on Monday?", punchline: "Because they make up everything — even excuses for being late." },
+        { setup: "Why did the bear get caught in the rain on Monday?", punchline: "He was a drizzly bear, and Mondays are already gloomy." },
+        { setup: "Why did the kid bring a string to school on Monday?", punchline: "Because he wanted to tie up the loose ends of the weekend." },
+        { setup: "Monday again?", punchline: "I need a re-do, with extra recess." },
+        { setup: "What did the zero say to the eight on Monday?", punchline: "\"Nice belt — mine's still on weekend time.\"" },
+        { setup: "Why did the student sit on his homework on Monday?", punchline: "Because he wanted to sit on top of the week." },
+        { setup: "Why is Monday like a pop quiz?", punchline: "It shows up when you're least ready for it." },
+        { setup: "What did Monday bring for show-and-tell?", punchline: "A yawn, and a \"can we do this tomorrow?\"" },
+        { setup: "Why did the dog refuse to get up on Monday?", punchline: "He was having a ruff start to the week." },
+        { setup: "Why did the phone's battery die on Monday?", punchline: "It spent the whole weekend streaming, and Monday drained it." },
+        { setup: "What do you call a lazy kangaroo on Monday?", punchline: "A pouch potato!" },
+        { setup: "Why did the girl bring crayons on Monday?", punchline: "To colour the week a bit brighter." },
+        { setup: "Monday's motto:", punchline: "\"Powered by snacks and hope — and five more days to go.\"" }
+      ];
+      var FRIDAY_JOKES = [
+        // Friday jokes
+        { setup: "Why did the student bring a ladder to school on Friday?", punchline: "Because it was the last step before the weekend." },
+        { setup: "What's a teacher's favourite day of the week?", punchline: "Fri-yay." },
+        { setup: "Why shouldn't tests happen on Fridays?", punchline: "Because even questions need a break." },
+        { setup: "What did the pencil say on Friday?", punchline: "\"I'm totally drawn out!\"" },
+        { setup: "Why was the math book happy on Friday?", punchline: "It finally solved all its problems." },
+        { setup: "How do you know the school week is over?", punchline: "Students start smiling again." },
+        { setup: "Why was the ruler so excited on Friday?", punchline: "It finally measured up to the weekend." },
+        { setup: "Why did the student toss a clock out the window on Friday?", punchline: "She wanted to see time fly." },
+        { setup: "Why did the computer plan to crash over the weekend?", punchline: "It just wanted a break — literally, \"Crash.\"" },
+        { setup: "What did the backpack say on Friday afternoon?", punchline: "\"Let's pack it up!\"" },
+        { setup: "Why did the student cross the playground on Friday?", punchline: "To slide into the weekend." },
+        { setup: "Why was the school bell promoted on Friday?", punchline: "It always rings in good news." },
+        { setup: "Why is Friday your laptop's favourite day?", punchline: "It gets to sleep through the weekend." },
+        { setup: "Why did the student put their homework in the freezer on Friday?", punchline: "They wanted to chill over the weekend." },
+        { setup: "What's Friday's favourite exercise?", punchline: "The weekend stretch." },
+        { setup: "Why did the calendar look forward to Friday?", punchline: "Because it had a date with the weekend." },
+        { setup: "What do you call Friday afternoon?", punchline: "Saturday Eve." },
+        { setup: "Why did the kid dance on Friday?", punchline: "Because the weekend's got the beat." },
+        { setup: "What's Friday's favourite subject?", punchline: "Recess!" },
+        { setup: "Why did the kid call Friday \"Magic Day\"?", punchline: "Because homework disappears on Friday." },
+        { setup: "What's a hamburger's favourite day?", punchline: "Fries-day." },
+        { setup: "What did the salad say on Friday?", punchline: "\"Lettuce celebrate!\"" },
+        { setup: "Why did the banana smile on Friday?", punchline: "It was peeling great!" },
+        { setup: "What's Friday's favourite breakfast?", punchline: "Friday-ggs and ham." },
+        { setup: "What type of pasta is best for Friday the 13th?", punchline: "Fettuccine Afraid-o." },
+        { setup: "What did the burrito say to the gyro on Friday?", punchline: "\"That's a wrap on this week!\"" },
+        { setup: "Knock, knock. Who's there? Weekend. Weekend who?", punchline: "Weekend totally sleep in tomorrow!" },
+        { setup: "Knock, knock. Who's there? Orange. Orange who?", punchline: "Orange you glad it's finally Friday?" },
+        { setup: "Knock, knock. Who's there? Gladys. Gladys who?", punchline: "Gladys almost the weekend!" },
+        { setup: "Why was the car excited for Friday?", punchline: "It could finally take a brake." },
+        { setup: "What did the shoes say on Friday?", punchline: "\"Let's kick back!\"" },
+        { setup: "What did Friday say to Saturday and Sunday when they were about to give up?", punchline: "\"Weekend do it!\"" },
+        { setup: "Where does Friday come before Thursday?", punchline: "In the dictionary." },
+        { setup: "What does a watch do on the weekend?", punchline: "It unwinds." },
+        { setup: "Why don't people like jokes about Friday?", punchline: "Because their sense of humour is week." }
+      ];
+      var WEEKEND_JOKES = [
+        // Weekend jokes
+        { setup: "Why are Saturday and Sunday the strongest days of the week?", punchline: "Because Monday through Friday are weak days." },
+        { setup: "Why did Friday buy a box of tissues?", punchline: "Because the next day was a Sadderday." },
+        { setup: "What do condiments do on the weekend?", punchline: "Ketchup on their sleep." },
+        { setup: "What did the burrito say to the quesadilla on Sunday night?", punchline: "\"That's a wrap!\"" },
+        { setup: "Why do so many people get sick during the workweek?", punchline: "They have weekend immune systems." },
+        { setup: "Did you hear the story about Saturday and Sunday?", punchline: "It started off great but had a weekend." },
+        { setup: "What did the lazy employee do the day after Friday?", punchline: "Sat." },
+        { setup: "What's a weekend's favourite word?", punchline: "Long." },
+        { setup: "What is the greatest gift Friday can give?", punchline: "Weekend vibes." },
+        { setup: "Why did the weekend go to therapy?", punchline: "It had too much Mondays on its mind." },
+        { setup: "What do you call a lazy Saturday afternoon?", punchline: "A snooze fest." },
+        { setup: "What's Saturday's favourite dessert?", punchline: "A sundae." },
+        { setup: "Why did Saturday put on sunscreen?", punchline: "SUNday was coming." },
+        { setup: "What's the worst sound on Saturday morning?", punchline: "Alarm clocks!" },
+        { setup: "Why didn't Saturday need to go to the gym?", punchline: "It wasn't a weak day." },
+        { setup: "What do you call a Saturday that's not working?", punchline: "A weak-end." },
+        { setup: "Why did Saturday bring a ladder?", punchline: "To take the weekend to the next level." },
+        { setup: "Why is Friday everyone's favourite?", punchline: "Because it comes with a weekEND prize." },
+        { setup: "What do weekends and pancakes have in common?", punchline: "They're both best stacked with fun." },
+        { setup: "Why did Sunday sit on the couch all day?", punchline: "It was feeling RESTful." },
+        { setup: "What did the weekend tell homework?", punchline: "\"Not today!\"" },
+        { setup: "Why did the calendar go to the playground on Saturday?", punchline: "For a DATE full of fun." },
+        { setup: "What's the weekend's favourite sport?", punchline: "Chill-athlon." },
+        { setup: "Why did the kid bring sunglasses on Saturday?", punchline: "Because it was going to be a BRIGHT time." },
+        { setup: "Why do I feel great on Saturday and Sunday but sick the rest of the week?", punchline: "Weekend immune system." },
+        { setup: "Which day of the week cries the most?", punchline: "Sadderday." },
+        { setup: "When do Saturdays turn sour?", punchline: "When they turn into Sunday." },
+        { setup: "Why was Saturday night fever so contagious?", punchline: "It spread by disco-inferno." },
+        { setup: "What do cows do on Saturday nights?", punchline: "They go to the mooo-vies." },
+        { setup: "Why did the skeleton skip Saturday baseball?", punchline: "His heart wasn't in it." },
+        { setup: "What do you call Saturday and Sunday in a band?", punchline: "The weekenders — they only play two days a week." },
+        { setup: "Why did the bed love Saturday?", punchline: "Because nobody made it get up early." },
+        { setup: "What's Sunday's favourite subject?", punchline: "History — it keeps looking back at Saturday." },
+        { setup: "Why did the laundry pile up on Sunday?", punchline: "It was waiting for Monday to fold." },
+        { setup: "What did Saturday say to Sunday?", punchline: "\"You're the only day that understands me — and then you leave.\"" },
+        { setup: "Why do weekends go by so fast?", punchline: "Because they're always in a hurry to become Monday." },
+        { setup: "What did the pillow say on Saturday morning?", punchline: "\"Stay. Just five more minutes — actually, five more hours.\"" },
+        { setup: "Why did the kid hide the alarm clock on Saturday?", punchline: "So Monday couldn't find it." },
+        { setup: "What's a weekend's favourite game?", punchline: "Hide-and-sleep." },
+        { setup: "Why did the fridge love Saturday?", punchline: "It was finally snack o'clock all day." },
+        { setup: "What do you call a Sunday that feels like a Monday?", punchline: "A Sunday scaries day." },
+        { setup: "Why did the bike love the weekend?", punchline: "No school run — just a joy ride." },
+        { setup: "What did the dog do all Saturday?", punchline: "Paw-ty — then napped like it was his job." },
+        { setup: "What did the cat do on Sunday?", punchline: "Watched a meow-vie marathon, then judged everyone." },
+        { setup: "Why did the fish love Saturday?", punchline: "No school — just go with the flow." },
+        { setup: "What do birds do on Sunday?", punchline: "Tweet about how fast the weekend went." },
+        { setup: "Why did the turtle love the weekend?", punchline: "It could finally shell-ebrate slowly." },
+        { setup: "What do squirrels do on Saturdays?", punchline: "They go nuts — then nap in a tree." },
+        { setup: "Why did the penguin slide into Saturday?", punchline: "It was the coolest way to start the weekend." },
+        { setup: "What do elephants do on Saturday?", punchline: "Pack their trunks for a weekend trip." },
+        { setup: "Why did the pizza love Saturday night?", punchline: "It finally delivered — to a couch, with a movie." },
+        { setup: "What did the ice cream say on Sunday?", punchline: "\"Let's chill — Monday can wait.\"" },
+        { setup: "Why did the popcorn love Saturday movies?", punchline: "It was poppin' with excitement." },
+        { setup: "What do you call a weekend with no plans?", punchline: "A perfect plan." },
+        { setup: "Why did the shoes stay home on Sunday?", punchline: "They were sole-tired from Saturday." },
+        { setup: "What did the phone say on Saturday?", punchline: "\"No notifications from school — finally!\"" },
+        { setup: "Why did the homework hide on Saturday?", punchline: "It knew nobody wanted to see it until Monday." },
+        { setup: "What did the teacher do on Saturday?", punchline: "Graded nothing, and smiled about it." },
+        { setup: "Why did the sun love Sunday?", punchline: "It was the brightest day to do absolutely nothing." },
+        { setup: "What did the moon say on Saturday night?", punchline: "\"Stay up late — the weekend only comes once a week.\"" },
+        { setup: "Knock, knock. Who's there? Saturday. Saturday who?", punchline: "Saturday's the day — let's go play, no school today!" },
+        { setup: "Knock, knock. Who's there? Sunday. Sunday who?", punchline: "Sunday's here, so let's sundae-fundays with ice cream!" },
+        { setup: "Why did the kid count down to Saturday?", punchline: "Because Friday was just the trailer — Saturday was the movie." },
+        { setup: "What did Sunday night say to Monday morning?", punchline: "\"Sorry — I have to hand you the alarm clock now.\"" },
+        { setup: "Weekend motto:", punchline: "\"Sleep in, snack lots, and pretend Monday is a rumour.\"" },
+        // Plus one general joke (the golfer) so the 66 weekend days from Nov 12 to Jun 30 each get a fresh joke
+        { setup: "Why did the golfer wear two pairs of pants?", punchline: "In case he got a hole in one." }
+      ];
+      var NOVEMBER_JOKES = [
+        // Fall / Thanksgiving jokes
+        { setup: "Why do pilgrims' pants keep falling down?", punchline: "Because they wear their belt buckles on their hats." },
+        { setup: "What type of key has legs and can't open doors?", punchline: "A turkey." },
+        { setup: "Why did the turkey need help walking?", punchline: "He gobbled till he wobbled." },
+        { setup: "What do you always get at the end of Thanksgiving?", punchline: "The letter \"g.\"" },
+        { setup: "Why did the turkey cross the road?", punchline: "It was the chicken's day off!" },
+        { setup: "What sound does a turkey's phone make?", punchline: "\"Wing, wing!\"" },
+        { setup: "What is a pumpkin's favourite sport?", punchline: "Squash." },
+        { setup: "What did one leaf say to another?", punchline: "\"I'm falling for you!\"" },
+        { setup: "How do you fix a broken pumpkin?", punchline: "With a pumpkin patch!" },
+        { setup: "What happens when winter arrives?", punchline: "Autumn leaves." }
+      ];
+      var DECEMBER_JOKES = [
+        // Winter holiday jokes
+        { setup: "What do reindeer say before they tell you a joke?", punchline: "This one's gonna sleigh you!" },
+        { setup: "What does an elf work on after school?", punchline: "His gnomework." },
+        { setup: "What do you call an old snowman?", punchline: "Water." },
+        { setup: "What is a Christmas tree's favourite candy?", punchline: "Orna-mints!" },
+        { setup: "What do snowmen eat for breakfast?", punchline: "Snowflakes." },
+        { setup: "What happened to the thief who stole a Christmas calendar?", punchline: "He got 12 months." },
+        { setup: "Where does Santa keep all his money?", punchline: "At the local snow bank." },
+        { setup: "What do you get when you cross a snowman and a vampire?", punchline: "Frostbite." },
+        { setup: "What falls but never gets hurt?", punchline: "Snow." },
+        { setup: "How does the snow globe feel this year?", punchline: "A little shaken." },
+        { setup: "What do snow parents call their kids?", punchline: "Chill-dren." },
+        { setup: "How do mountains stay warm in winter?", punchline: "They put on their snowcaps." },
+        { setup: "What did the snowflake say to the other snowflake?", punchline: "\"You're one of a kind!\"" },
+        { setup: "Why did Princess Elsa fall off her sled?", punchline: "She let it go." },
+        { setup: "Knock, knock. Who's there? Mary. Mary who?", punchline: "Mary Christmas and Abbey New Year!" }
+      ];
+      var WINTER_JOKES = [
+        // School / homework / test jokes — served on Tue/Wed/Thu in January & February
+        { setup: "Why did the chickens cross the school playground?", punchline: "To get to the other slide." },
+        { setup: "Did you hear about the teacher who is also a Texas Ranger?", punchline: "His name is Chalk Norris." },
+        { setup: "What time does Godzilla come to class?", punchline: "Whenever he wants." },
+        { setup: "Why is magic class the hardest to pass?", punchline: "All of the tests have trick questions." },
+        { setup: "What's an English teacher's favourite dinosaur?", punchline: "Thesaurus rex." },
+        { setup: "Why do chemistry students tell the worst jokes?", punchline: "All the good jokes argon." },
+        { setup: "Why is the library always the tallest part of any school?", punchline: "It has the most stories." },
+        { setup: "Why did the student eat her exam?", punchline: "The teacher said it was a piece of cake." },
+        { setup: "Why did the librarian remove the clock from the library?", punchline: "It was tocking too much." },
+        { setup: "Why did the computer teacher quit?", punchline: "He lost his drive." },
+        { setup: "Why was the math book sad?", punchline: "Because it had so many problems." },
+        { setup: "Why was the blanket so confident before the test?", punchline: "It had the material covered." },
+        { setup: "What's the longest word in the English language?", punchline: "Smiles — there is a mile between the first and last letters." },
+        { setup: "Why did the circle graduate early?", punchline: "It already had 360 degrees." },
+        { setup: "Why do protons make the best cheerleaders?", punchline: "They're always so positive." },
+        { setup: "Why did the dog get detention?", punchline: "It forgot to eat its homework." },
+        { setup: "What vegetables do librarians love?", punchline: "Quiet peas!" },
+        { setup: "Why won't the elephant use the computer at school?", punchline: "He's afraid of the mouse." },
+        { setup: "Why can't you trust atoms?", punchline: "They make up everything." },
+        { setup: "Why can't you trust stairs?", punchline: "They're always up to something." },
+        { setup: "Why did the middle schooler bring a ladder to class?", punchline: "She wanted to get into high school." },
+        { setup: "Why did the teacher write his lesson on the window?", punchline: "He wanted the information to be perfectly clear." },
+        { setup: "Why did the student wear glasses to math class?", punchline: "He said it improved division." },
+        { setup: "How long did it take the corn to get through seventh grade?", punchline: "Two ears." },
+        { setup: "What's a math teacher's favourite dessert?", punchline: "Pi." },
+        { setup: "My math teacher called me average", punchline: "that's so mean!" },
+        { setup: "I failed my history test,", punchline: "But I'm just going to put the past behind me." },
+        { setup: "Never trust math teachers who use graph paper;", punchline: "They're always plotting something." },
+        { setup: "Story: Plagiarised paper: Noticing a paper was clearly plagiarised, a teacher called the student in. \"I found your entire paper online. Do you have anything to say?\"", punchline: "She said, angrily, \"Well, I paid my sister to write it, but I didn't think she'd plagiarise!\"" },
+        { setup: "Story: Questioning authority: During computer class, the teacher chastised a boy for talking to the girl next to him. \"If you have a question, ask me,\" she said. \"OK,\" he answered.", punchline: "\"Do you want to go out with me Friday night?\"" }
+      ];
+      var SPRING_JOKES = [
+        // Spring jokes
+        { setup: "Does February march?", punchline: "No, but April may!" },
+        { setup: "Which month of the year is the shortest?", punchline: "May. It only has three letters." },
+        { setup: "What did the flower say when he found out it was allergy season?", punchline: "\"You've got to be pollen my leg.\"" },
+        { setup: "What is a flower's favourite kind of pickle?", punchline: "A daffo-dill." },
+        { setup: "What did the tree say during springtime?", punchline: "\"Well, this is a re-leaf!\"" },
+        { setup: "Which superhero likes spring the best?", punchline: "Robin." },
+        { setup: "How does the sun listen to music?", punchline: "On the ray-dio." },
+        { setup: "In all of spring, it can rain cats and dogs, but when does it rain monkeys?", punchline: "In Ape-ril." },
+        { setup: "What do we call it when it starts raining ducks and chickens?", punchline: "That's some fowl weather!" },
+        { setup: "What travelled around the world over spring break but stayed in one place?", punchline: "A stamp." },
+        { setup: "Where did the egg go for spring break?", punchline: "New Yolk City." },
+        { setup: "What's a tornado's favourite game?", punchline: "Twister." },
+        { setup: "What is a chick's favourite vegetable?", punchline: "Eggplant." },
+        { setup: "Why are waterbeds so bouncy?", punchline: "They're filled with spring water." },
+        { setup: "What do you call an emergency in spring?", punchline: "May Day." },
+        // Music / orchestra / cello jokes — spring concert season
+        { setup: "Why did Beethoven get rid of his chickens?", punchline: "All they said was, \"Bach, Bach, Bach.\"" },
+        { setup: "Why shouldn't you let kids watch big band performances on TV?", punchline: "Too much sax and violins." },
+        { setup: "What do you get when you drop a piano down a mineshaft?", punchline: "A-flat minor." },
+        { setup: "How do you fix a broken tuba?", punchline: "With a tuba glue." },
+        { setup: "How do you make a bandstand?", punchline: "Take away their chairs." },
+        { setup: "Why did the string quartet lose its composer?", punchline: "He was Haydn." },
+        { setup: "What did the cello say to the violin?", punchline: "\"Hey, don't get strung out!\"" },
+        { setup: "How does Yo-Yo Ma answer the phone?", punchline: "\"Cello?\"" },
+        { setup: "Knock, knock. Who's there? Cello. Cello who?", punchline: "Cello there, little buddy!" },
+        { setup: "Why did the cello get a timeout?", punchline: "It played its music too loud!" },
+        { setup: "Why was the cello feeling shy?", punchline: "It had a concert in front of a large crowd!" },
+        { setup: "What do you call a cow that can play a musical instrument?", punchline: "A moo-sician." },
+        { setup: "Why couldn't the pony sing at her choir concert?", punchline: "She was a little horse." },
+        { setup: "What kind of music are balloons afraid of?", punchline: "Pop music." },
+        { setup: "What do you call a group of musical whales?", punchline: "An orca-stra." },
+        // General jokes (the other nine — the golfer rounds out the weekend pool above)
+        { setup: "What do planets use to download music?", punchline: "Neptunes." },
+        { setup: "What goes zzub zzub?", punchline: "A bee flying backwards." },
+        { setup: "Why did the baby cookie cry?", punchline: "Because it was a wafer so long." },
+        { setup: "What happened to the frog that parked illegally?", punchline: "He was toad away." },
+        { setup: "What do you call a polar bear wearing earmuffs?", punchline: "Anything you want. He can't hear you!" },
+        { setup: "Why do magicians do so well in school?", punchline: "They're good at trick questions." },
+        { setup: "What do you get from a cow after an earthquake?", punchline: "A milkshake!" },
+        { setup: "What do you call a droid that likes taking the scenic route?", punchline: "R2-Detour." },
+        { setup: "What do you call cheese that doesn't belong to you?", punchline: "Nacho cheese!" }
+      ];
+      var SUMMER_JOKES = [
+        // Summer / June jokes
+        { setup: "Why did the robot take a summer holiday?", punchline: "He needed to recharge his batteries." },
+        { setup: "Where do eggs go on summer vacation?", punchline: "New Yolk City!" },
+        { setup: "What do you call a snowman in the summer?", punchline: "A puddle." },
+        { setup: "What do you call a barbecue for cats?", punchline: "A purr-becue." },
+        { setup: "What do you call a barbecue for dogs?", punchline: "A bark-becue." },
+        { setup: "What's a palm tree's favourite summer clothing item?", punchline: "His swimming trunks!" },
+        { setup: "What does a frog drink in the summer?", punchline: "Croak-a Cola." },
+        { setup: "Where do sheep go on summer vacation?", punchline: "The Baa-hamas!" },
+        { setup: "What do you call ice cream on a hot summer day?", punchline: "Melted!" },
+        { setup: "Why do bananas use sunscreen?", punchline: "Because they peel!" },
+        { setup: "What did the pig say on a hot summer day?", punchline: "\"I'm bacon!\"" },
+        { setup: "What do you get when you combine an elephant with a fish?", punchline: "Swimming trunks!" },
+        { setup: "Why was the sand wet?", punchline: "Because the sea weed!" },
+        { setup: "What is the best day to go to the beach?", punchline: "SUNday!" },
+        { setup: "How do you prevent a summer cold?", punchline: "Catch it in winter." }
+      ];
+      var BACK_TO_SCHOOL_JOKES = [
+        // Back-to-school jokes
+        { setup: "What did the buffalo say to his child on the first day of school?", punchline: "Bison!" },
+        { setup: "Why was Kasie so prepared for her first day of math class?", punchline: "She had a calculator she could really count on." },
+        { setup: "What did the pencil say to the pen on the first day of school?", punchline: "Looking sharp!" },
+        { setup: "Why didn't the dinosaur want to go back to school?", punchline: "She was a nervous rex." },
+        { setup: "Why did the student carry a ladder on the first day of school?", punchline: "She wanted to climb to the top of her class." },
+        { setup: "Why was the ghost so excited for his first day of school?", punchline: "He had school spirit." },
+        { setup: "What was the English teacher's breakfast on the first day of school?", punchline: "Synonym rolls." },
+        { setup: "How do students get summoned to the library on the first day of school?", punchline: "They get paged." },
+        { setup: "What did the whiteboard say at the end of the first school day?", punchline: "\"Phew! I'm wiped.\"" },
+        { setup: "Why was the cafeteria clock behind on the first day of school?", punchline: "It kept going back four seconds." },
+        { setup: "Why did the echo get detention on its first day of school?", punchline: "It kept answering back." },
+        { setup: "What's the easiest way to get straight A's this year?", punchline: "Use a ruler." },
+        { setup: "Why was the geometry teacher so tired after only the first day of school?", punchline: "He was out of shapes." },
+        { setup: "How do astronomy professors organise a back-to-school party?", punchline: "They planet." },
+        { setup: "Why did the teacher draw on the window on the first day?", punchline: "Because he wanted his lesson to be very clear." }
+      ];
+      var OCTOBER_JOKES = [
+        // Halloween / October jokes
+        { setup: "Why don't ghosts like rain?", punchline: "Because it dampens their spirits." },
+        { setup: "What do you get when you divide the circumference of a jack-o'-lantern by its diameter?", punchline: "Pumpkin pi." },
+        { setup: "Why did the vampire fail art?", punchline: "He only knew how to draw blood." },
+        { setup: "How do you know a skeleton is sick?", punchline: "He's coffin." },
+        { setup: "Why are ghosts bad liars?", punchline: "Because you can see right through them." },
+        { setup: "What do you do to fix a smashed jack-o'-lantern?", punchline: "You use a pumpkin patch." },
+        { setup: "Are any Halloween monsters good at math?", punchline: "No — unless you Count Dracula." },
+        { setup: "What do witches ask for at hotels?", punchline: "Broom service." },
+        { setup: "What is a skeleton's favourite musical instrument?", punchline: "A trombone." },
+        { setup: "Why did the skeleton climb up the tree?", punchline: "Because a dog was after his bones!" }
+      ];
+      function seasonalJokes(month) { // month: 0 = January … 11 = December
+        if (month === 11) return DECEMBER_JOKES;
+        if (month === 0 || month === 1) return WINTER_JOKES;
+        if (month >= 2 && month <= 4) return SPRING_JOKES;
+        if (month === 5 || month === 6) return SUMMER_JOKES;
+        if (month === 7 || month === 8) return BACK_TO_SCHOOL_JOKES;
+        if (month === 9) return OCTOBER_JOKES;
+        return NOVEMBER_JOKES;
+      }
+      // No-repeat picker: count how many of today's pool days have already
+      // happened since the school year started (Mon Aug 24, 2026) and serve
+      // the next joke in that pool's order. Pool days are served in sequence
+      // — never shuffled and never cycled back early — and every pool is
+      // larger than the number of times it can be picked between now and
+      // the end of the school year in June, so Eva never sees a repeat.
+      var SCHOOL_YEAR_START_DAY = Math.floor(Date.UTC(2026, 7, 24) / 86400000);
+      function poolOrdinal(matchDow, matchMonths) {
+        var now = new Date();
+        var today = Math.floor(Date.UTC(now.getFullYear(), now.getMonth(), now.getDate()) / 86400000);
+        var n = 0;
+        for (var d = SCHOOL_YEAR_START_DAY; d < today; d++) {
+          var dt = new Date(d * 86400000);
+          if (matchDow(dt.getUTCDay()) && (!matchMonths || matchMonths(dt.getUTCMonth()))) n++;
+        }
+        return n;
+      }
+      function seasonalMonths(month) {
+        if (month === 11) return function (m) { return m === 11; };
+        if (month === 0 || month === 1) return function (m) { return m === 0 || m === 1; };
+        if (month >= 2 && month <= 4) return function (m) { return m >= 2 && m <= 4; };
+        if (month === 5 || month === 6) return function (m) { return m === 5 || m === 6; };
+        if (month === 7 || month === 8) return function (m) { return m === 7 || m === 8; };
+        if (month === 9) return function (m) { return m === 9; };
+        return function (m) { return m === 10; };
+      }
+      function jokeOfTheDay() {
+        var now = new Date();
+        var dow = now.getDay(); // 0 = Sunday … 6 = Saturday
+        var pool, idx;
+        if (dow === 1) { pool = MONDAY_JOKES; idx = poolOrdinal(function (d) { return d === 1; }, null); }                    // Monday jokes on Mondays
+        else if (dow === 5) { pool = FRIDAY_JOKES; idx = poolOrdinal(function (d) { return d === 5; }, null); }               // Friday jokes on Fridays
+        else if (dow === 0 || dow === 6) { pool = WEEKEND_JOKES; idx = poolOrdinal(function (d) { return d === 0 || d === 6; }, null); } // Weekend jokes Sat/Sun
+        else { pool = seasonalJokes(now.getMonth()); idx = poolOrdinal(function (d) { return d >= 2 && d <= 4; }, seasonalMonths(now.getMonth())); } // Otherwise: the season
+        return pool[idx % pool.length];
+      }
+      // Scene-matched joke picture — NOT just a topic match. Each picture
+      // below depicts one specific scene, and it is only shown when the
+      // joke's own text describes that same scene. If no picture depicts
+      // the joke's actual situation, no picture is shown rather than a
+      // wrong one.
+      //  - sneeze-picture-day.webp: a kid sneezing on a stool in front of a
+      //    blue picture-day backdrop, photographer with a camera on a tripod.
+      //  - sneeze.webp: a kid sneezing into a tissue at a school desk, tissue
+      //    box beside them.
+      //  - homework.webp: a kid buried under a huge stack of homework books
+      //    and papers, overwhelmed, pencil in hand.
+      //  - cello.webp: a kid playing a giant cello, bow in hand, music notes
+      //    in the air.
+      //  - fall.webp: a turkey wearing sunglasses standing in autumn leaves
+      //    with pumpkins around it.
+      function jokeImageFor(joke) {
+        var t = ((joke.setup || "") + " " + (joke.punchline || "")).toLowerCase();
+        function has() { for (var i = 0; i < arguments.length; i++) { if (t.indexOf(arguments[i]) >= 0) return true; } return false; }
+        // Picture day FIRST: sneezing + a photo/picture/retake in the same
+        // joke is the picture-day scene, never the plain desk-sneeze scene.
+        if (t.indexOf("sneez") >= 0 && has("photo", "picture", "retake")) {
+          return { src: "https://musicdad2.github.io/Eva-Week-Checklist/images/sneeze-picture-day.webp", fb: "https://musicdad2.github.io/Eva-Week-Checklist/images/sneeze-picture-day.webp", alt: "Cartoon kid sneezing during school picture day, sitting on a stool in front of a blue backdrop while the photographer holds a camera on a tripod" };
+        }
+        // Sneezing at school, in class or during a quiz — the desk scene.
+        if (t.indexOf("sneez") >= 0 && has("class", "quiz", "school", "allerg")) {
+          return { src: "https://musicdad2.github.io/Eva-Week-Checklist/images/sneeze.webp", fb: "https://musicdad2.github.io/Eva-Week-Checklist/images/sneeze.webp", alt: "Cartoon kid sneezing into a tissue at a school desk, with a tissue box nearby" };
+        }
+        // Buried / overwhelmed by homework or books — the homework-pile
+        // scene. This matches when the joke is ABOUT homework: homework
+        // named again and again (e.g. "Why is Friday's homework the most
+        // optimistic homework of the week?"), the amount piling up, a
+        // backpack weighed down by it, or teachers piling on a project, a
+        // packet and chapters at once. One passing mention is not enough.
+        var homeworkMentions = (t.match(/homework/g) || []).length;
+        if (homeworkMentions >= 2 ||
+            (t.indexOf("homework") >= 0 && has("backpack", "way more", "fourteen", "multiplied", "pile", "stack", "buried")) ||
+            has("buried under", "pile of books", "stack of books") ||
+            (t.indexOf("project") >= 0 && t.indexOf("packet") >= 0) ||
+            (t.indexOf("backpack") >= 0 && t.indexOf("turkey") >= 0)) {
+          return { src: "https://musicdad2.github.io/Eva-Week-Checklist/images/homework.webp", fb: "https://musicdad2.github.io/Eva-Week-Checklist/images/homework.webp", alt: "Cartoon kid buried under a huge stack of homework books and papers, holding a pencil" };
+        }
+        // Actually playing in an orchestra / concert / rehearsal, or playing
+        // a cello — the giant-cello scene.
+        if (t.indexOf("cello") >= 0 ||
+            (t.indexOf("orchestra") >= 0 && has("concert", "rehears", "piece", "play", "squeak", "entrance", "clicked"))) {
+          return { src: "https://musicdad2.github.io/Eva-Week-Checklist/images/cello.webp", fb: "https://musicdad2.github.io/Eva-Week-Checklist/images/cello.webp", alt: "Cartoon kid playing a giant cello with a bow, with musical notes in the air" };
+        }
+        // A turkey itself, or jumping in a leaf pile — the turkey-in-leaves
+        // scene. A November or Thanksgiving mention alone is not enough.
+        if (t.indexOf("turkey") >= 0 || has("leaf pile", "leaf piles", "jump in", "jumping in the leaves")) {
+          return { src: "https://musicdad2.github.io/Eva-Week-Checklist/images/fall.webp", fb: "https://musicdad2.github.io/Eva-Week-Checklist/images/fall.webp", alt: "Cartoon turkey wearing sunglasses, standing in autumn leaves with pumpkins around it" };
+        }
+        return null;
+      }
+      // Resilient joke-picture loader. A single failed load must never
+      // hide the picture: try the absolute GitHub Pages URL, retry
+      // it once with a cache-buster (a transient error or a stale cached
+      // 404 can fix itself), then fall back to the data-fb URL and retry
+      // that too. The image is only hidden after every attempt has failed.
+      function loadJokeImage(imgEl, info) {
+        function bust(u) { return u + (u.indexOf("?") >= 0 ? "&" : "?") + "retry=1"; }
+        var attempts = [info.src, bust(info.src), info.fb, bust(info.fb)];
+        var i = 0;
+        imgEl.onerror = function () {
+          i++;
+          if (i < attempts.length) { imgEl.src = attempts[i]; }
+          else { imgEl.style.display = "none"; }
+        };
+        imgEl.onload = function () { imgEl.style.display = "block"; };
+        if (imgEl.getAttribute("src") !== attempts[0]) {
+          imgEl.src = attempts[0];
+        } else if (imgEl.complete && imgEl.naturalWidth === 0) {
+          // The static src already failed before this handler was attached.
+          imgEl.onerror();
+        }
+      }
+      function setDailyFun() {
+        var day = new Date().getDay();
+        var g = document.getElementById("greeting");
+        if (g) g.textContent = GREETINGS[day];
+        var joke = jokeOfTheDay();
+        var setupEl = document.getElementById("joke-setup");
+        if (setupEl) setupEl.innerHTML = "😂 Joke of the day: " + esc(joke.setup) + '<span class="joke-hint">Think about it… the answer is hiding at the very bottom of the page! 👇</span>';
+        var imgEl = document.getElementById("joke-img");
+        if (imgEl) {
+          var info = jokeImageFor(joke);
+          if (info) {
+            imgEl.style.display = "block";
+            imgEl.alt = info.alt;
+            imgEl.setAttribute("data-fb", info.fb);
+            loadJokeImage(imgEl, info);
+          } else {
+            imgEl.style.display = "none";
+            imgEl.removeAttribute("src");
+          }
+        }
+        var punchEl = document.getElementById("joke-punchline");
+        if (punchEl) punchEl.textContent = "🥁 " + joke.punchline;
+      }
+      setDailyFun();
+
+      document.getElementById("refresh-btn").addEventListener("click", function () { loadTasks(true); });
+      document.getElementById("past-weeks-btn").addEventListener("click", function () {
+        pastWeeksOpen = !pastWeeksOpen;
+        render();
+        if (pastWeeksOpen) {
+          var view = document.getElementById("past-weeks-view");
+          if (view && view.scrollIntoView) view.scrollIntoView({ block: "start" });
+        }
+      });
+      document.addEventListener("visibilitychange", function () { if (!document.hidden) loadTasks(false); });
+      setInterval(function () { if (!document.hidden) loadTasks(false); }, 60000);
+
+      render();
+      loadTasks(false);
+    </script>
+  </body>
+</html>
